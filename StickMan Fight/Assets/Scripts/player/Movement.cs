@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public class Movement : NetworkBehaviour
 {
     private PlayerInput input;
     private Vector2 moveVector = Vector2.zero;
@@ -59,15 +60,23 @@ public class Movement : MonoBehaviour
         moveVector = Vector2.zero;
     }
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         leftLegRB = leftLeg.GetComponent<Rigidbody2D>();
         rightLegRB = rightLeg.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        if (IsOwner)
+        {
+            walkMovement();
+        }
+        
+    }
+
+    private void walkMovement()
     {
         if (moveVector.x != 0)
         {
@@ -86,15 +95,7 @@ public class Movement : MonoBehaviour
         {
             anim.Play("Idle");
         }
-
-        /*isOnGround = Physics2D.OverlapCircle(playerPosition.position, positionRadius, ground);
-        if (isOnGround && Input.GetKeyDown(KeyCode.Space))
-        {
-            RB.AddForce(Vector2.up * jumpForce);
-        }*/
     }
-
-
 
     IEnumerator MoveRight(float seconds)
     {
@@ -112,12 +113,13 @@ public class Movement : MonoBehaviour
 
     private void OnJump()
     {
-        
-        isOnGround = Physics2D.OverlapCircle(playerPosition.position, positionRadius, ground);
-        if (isOnGround == true)
+        if (IsOwner)
         {
-            RB.AddForce(Vector2.up * jumpForce);
+            isOnGround = Physics2D.OverlapCircle(playerPosition.position, positionRadius, ground);
+            if (isOnGround == true)
+            {
+                RB.AddForce(Vector2.up * jumpForce);
+            }
         }
-        
     }
 }
