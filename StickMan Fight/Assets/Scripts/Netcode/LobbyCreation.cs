@@ -15,10 +15,13 @@ public class LobbyCreation : MonoBehaviour
     [SerializeField] private Button createLobbyBtn;
     [SerializeField] private Button quickJoinBtn;
     [SerializeField] private TMP_InputField roomname;
+    [SerializeField] private Button joincodeBtn;
+    [SerializeField] private TMP_InputField joincodeInput;
     //[SerializeField] private TextMeshProUGUI lobbynaemText;
 
     public int Max_Players = 4;
     private Lobby joinedLobby;
+    private float heartbeattimer;
 
     private void Awake()
     {
@@ -28,7 +31,6 @@ public class LobbyCreation : MonoBehaviour
         {
             CreateLobby(roomname.text, false);
             
-            //lobbynaemText.text = joinedLobby.LobbyCode;
             hideUI();
         });
 
@@ -39,6 +41,36 @@ public class LobbyCreation : MonoBehaviour
             hideUI();
         });
 
+        joincodeBtn.onClick.AddListener(() =>
+        {
+
+            joinwithCode(joincodeInput.text);
+            hideUI();
+        });
+
+    }
+
+    private void Update()
+    {
+        HandleHeartBeat();
+    }
+
+    private void HandleHeartBeat()
+    {
+        if (IsLobbyHost()) {
+            heartbeattimer -= Time.deltaTime;
+            if (heartbeattimer < 0) {
+                float heartbeattimerMax = 15f;
+                heartbeattimer = heartbeattimerMax;
+                LobbyService.Instance.SendHeartbeatPingAsync(joinedLobby.Id);
+
+            }
+        }
+    }
+
+    private bool IsLobbyHost()
+    {
+        return joinedLobby != null && joinedLobby.HostId == AuthenticationService.Instance.PlayerId;
     }
 
     private async void InitializeUnityAuthentication()
@@ -90,6 +122,18 @@ public class LobbyCreation : MonoBehaviour
         catch (LobbyServiceException e) {
             Debug.Log(e.ToString());
         }
+    }
+
+    public async void joinwithCode(string code) {
+        try
+        {
+            joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(code);
+            NetworkManager.Singleton.StartClient();
+        }
+        catch (LobbyServiceException e) {
+            Debug.Log(e);
+        }
+        
     }
 
     private void hideUI()
