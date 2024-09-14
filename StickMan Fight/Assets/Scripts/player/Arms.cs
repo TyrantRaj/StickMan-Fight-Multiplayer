@@ -1,20 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 using UnityEngine.InputSystem;
-using UnityEditor.Experimental;
-using Unity.Burst.Intrinsics;
+
 public class Arms : MonoBehaviour
 {
     [SerializeField] private InputActionReference aimDir;
-    Vector3 playerpos;
-    int speed = 1000;
-    public Camera cam;
-    public Rigidbody2D armRB;
-    public Joystick joystick;
-    Vector3 Playeraim;
+    [SerializeField] private float shootingDelay = 0.5f; // Time between each shot in seconds
+    [SerializeField] private PlayerShooting shooting; // Reference to your shooting script
+    private Vector3 Playeraim;
+    private int speed = 1000;
+    private bool isShooting = false; // Prevents multiple coroutines from starting simultaneously
 
+    public Rigidbody2D armRB;
 
     // Update is called once per frame
     void Update()
@@ -28,22 +26,46 @@ public class Arms : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // Left Arm Rotation
         if (armRB.tag == "LeftArm")
         {
             float Leftangle = Mathf.Atan2(-Playeraim.x, Playeraim.y) * Mathf.Rad2Deg;
             if (Leftangle != 0)
             {
                 armRB.MoveRotation(Mathf.Lerp(armRB.rotation, Leftangle, speed));
+                // Add shooting logic if needed for the left arm
             }
         }
 
+        // Right Arm Rotation and Shooting
         if (armRB.tag == "RightArm")
         {
             float Rightangle = Mathf.Atan2(Playeraim.x, -Playeraim.y) * Mathf.Rad2Deg;
             if (Rightangle != 180)
             {
                 armRB.MoveRotation(Mathf.Lerp(armRB.rotation, Rightangle, speed));
+
+                // Start shooting coroutine if not already shooting
+                if (!isShooting)
+                {
+                    StartCoroutine(ShootWithDelay());
+                }
             }
         }
+    }
+
+    // Coroutine to shoot bullets with a delay
+    private IEnumerator ShootWithDelay()
+    {
+        isShooting = true;
+        shooting.shoot(); // First shot
+
+        // Wait for the specified delay before the next shot
+        yield return new WaitForSeconds(shootingDelay);
+
+        shooting.shoot(); // Second shot, add more shooting logic as needed
+
+        // After shooting, reset the shooting state
+        isShooting = false;
     }
 }
