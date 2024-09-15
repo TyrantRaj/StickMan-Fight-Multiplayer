@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 3031978798296804031}
   - component: {fileID: 3232371470804611278}
   - component: {fileID: 8969417843441883663}
+  - component: {fileID: 4129529890717261109}
   m_Layer: 0
   m_Name: UpperArmR
   m_TagString: RightArm
@@ -439,7 +440,7 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: -0.0010000765, y: 0.15600002}
   m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 0
+    m_MotorSpeed: 5000
     m_MaximumMotorForce: 10000
   m_UseLimits: 0
   m_AngleLimits:
@@ -458,10 +459,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimDir: {fileID: -4847360973894168712, guid: ce86c70b5cf66c64ab094529d95cc17b, type: 3}
-  cam: {fileID: 0}
-  armRB: {fileID: 2015589299978953528}
-  joystick: {fileID: 0}
+  shootingDelay: 0.5
   shooting: {fileID: -914792359390996017}
+  armRB: {fileID: 2015589299978953528}
 --- !u!114 &3232371470804611278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,6 +504,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4129529890717261109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2393563945143693086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c8b2a484e513643959392b7e696f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 2032999268551666285}
+  body_part_index: 2
 --- !u!1 &2988089849060419050
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,9 +534,10 @@ GameObject:
   - component: {fileID: 6658859190482080512}
   - component: {fileID: 4840078389224757165}
   - component: {fileID: 8403344144532525337}
+  - component: {fileID: 6172485751880863613}
   m_Layer: 0
   m_Name: UpperLegR
-  m_TagString: Untagged
+  m_TagString: bodypart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -737,6 +752,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6172485751880863613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2988089849060419050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c8b2a484e513643959392b7e696f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 2032999268551666285}
+  body_part_index: 2
 --- !u!1 &3333990208350281339
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,9 +929,10 @@ GameObject:
   - component: {fileID: 2844094539684726934}
   - component: {fileID: 4892737882932546460}
   - component: {fileID: 3910204548030809524}
+  - component: {fileID: 5748462613271625330}
   m_Layer: 0
   m_Name: UpperLegL
-  m_TagString: Untagged
+  m_TagString: bodypart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1117,6 +1147,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5748462613271625330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4529762315953319590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c8b2a484e513643959392b7e696f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 2032999268551666285}
+  body_part_index: 2
 --- !u!1 &6194145756992916145
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,9 +1177,10 @@ GameObject:
   - component: {fileID: 7683899285268219223}
   - component: {fileID: 4561030014022210857}
   - component: {fileID: 8279697301472060264}
+  - component: {fileID: 1445055960215212124}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Untagged
+  m_TagString: bodypart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1351,6 +1396,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1445055960215212124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6194145756992916145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c8b2a484e513643959392b7e696f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 2032999268551666285}
+  body_part_index: 0
 --- !u!1 &7591649395319588335
 GameObject:
   m_ObjectHideFlags: 0
@@ -1367,6 +1426,7 @@ GameObject:
   - component: {fileID: 3474563858083026192}
   - component: {fileID: 3434045030269974015}
   - component: {fileID: -914792359390996017}
+  - component: {fileID: 2032999268551666285}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1547,6 +1607,20 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7306231740991895790, guid: ec81a2a39dc278f47a62c739ea251298, type: 3}
   firePoint: {fileID: 2931633538537426805}
   bulletSpeed: 10
+--- !u!114 &2032999268551666285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7591649395319588335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db3f0a9cac168b9499656bc44a777394, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthtext: {fileID: 3000716452349228048}
+  stickmanRagdoll: {fileID: 0}
 --- !u!1 &7827263758139450566
 GameObject:
   m_ObjectHideFlags: 0
@@ -1563,6 +1637,7 @@ GameObject:
   - component: {fileID: 1425169776334775760}
   - component: {fileID: 6593676739186621771}
   - component: {fileID: 5138745319042358725}
+  - component: {fileID: 474077325423624430}
   m_Layer: 0
   m_Name: UpperArmL
   m_TagString: LeftArm
@@ -1718,7 +1793,7 @@ HingeJoint2D:
   m_ConnectedAnchor: {x: 0.0010000765, y: 0.15600002}
   m_UseMotor: 0
   m_Motor:
-    m_MotorSpeed: 0
+    m_MotorSpeed: 5000
     m_MaximumMotorForce: 10000
   m_UseLimits: 0
   m_AngleLimits:
@@ -1737,10 +1812,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimDir: {fileID: -4847360973894168712, guid: ce86c70b5cf66c64ab094529d95cc17b, type: 3}
-  cam: {fileID: 0}
-  armRB: {fileID: 3529414844155897504}
-  joystick: {fileID: 0}
+  shootingDelay: 0.5
   shooting: {fileID: -914792359390996017}
+  armRB: {fileID: 3529414844155897504}
 --- !u!114 &6593676739186621771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,6 +1857,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &474077325423624430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7827263758139450566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c8b2a484e513643959392b7e696f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 2032999268551666285}
+  body_part_index: 2
 --- !u!1 &8689898326846499201
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,9 +1934,10 @@ GameObject:
   - component: {fileID: 6659377884307201985}
   - component: {fileID: 90915111888714548}
   - component: {fileID: 245846434385514832}
+  - component: {fileID: 3042284745549841369}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: bodypart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2039,3 +2128,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3042284745549841369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8698963871145004187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c8b2a484e513643959392b7e696f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 2032999268551666285}
+  body_part_index: 1

@@ -73,7 +73,6 @@ public class Movement : NetworkBehaviour
         {
             walkMovement();
         }
-        
     }
 
     private void walkMovement()

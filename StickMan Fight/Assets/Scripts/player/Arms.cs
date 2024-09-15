@@ -9,7 +9,7 @@ public class Arms : MonoBehaviour
     [SerializeField] private float shootingDelay = 0.5f; // Time between each shot in seconds
     [SerializeField] private PlayerShooting shooting; // Reference to your shooting script
     private Vector3 Playeraim;
-    private int speed = 1000;
+    private int speed = 10;
     private bool isShooting = false; // Prevents multiple coroutines from starting simultaneously
 
     public Rigidbody2D armRB;
