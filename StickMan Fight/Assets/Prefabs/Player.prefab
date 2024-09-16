@@ -477,8 +477,8 @@ MonoBehaviour:
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 0
-  SyncRotAngleX: 0
-  SyncRotAngleY: 0
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
   SyncRotAngleZ: 1
   SyncScaleX: 0
   SyncScaleY: 0
@@ -725,8 +725,8 @@ MonoBehaviour:
   SyncPositionX: 1
   SyncPositionY: 1
   SyncPositionZ: 0
-  SyncRotAngleX: 0
-  SyncRotAngleY: 0
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
   SyncRotAngleZ: 1
   SyncScaleX: 0
   SyncScaleY: 0
@@ -1606,7 +1606,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7306231740991895790, guid: ec81a2a39dc278f47a62c739ea251298, type: 3}
   firePoint: {fileID: 2931633538537426805}
-  bulletSpeed: 10
+  bulletSpeed: 30
 --- !u!114 &2032999268551666285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1619,8 +1619,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db3f0a9cac168b9499656bc44a777394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movement: {fileID: 4881371855685754233}
+  ignorecollision: {fileID: 283843374883704031}
+  balances:
+  - {fileID: 7683899285268219223}
+  - {fileID: 6659377884307201985}
+  - {fileID: 6658859190482080512}
+  - {fileID: 2844094539684726934}
   healthtext: {fileID: 3000716452349228048}
-  stickmanRagdoll: {fileID: 0}
 --- !u!1 &7827263758139450566
 GameObject:
   m_ObjectHideFlags: 0

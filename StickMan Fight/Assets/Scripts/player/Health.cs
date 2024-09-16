@@ -31,8 +31,8 @@ public class Health : NetworkBehaviour
             health.Value = 0;
             healthtext.text = "0";
             //Debug.Log("Player Dead");
-            //dead();
-            stickmanRagdoll.OnDeath();
+            dead();
+            //stickmanRagdoll.OnDeath();
         }
         else
         {
