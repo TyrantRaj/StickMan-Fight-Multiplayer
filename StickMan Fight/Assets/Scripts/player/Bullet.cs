@@ -5,8 +5,8 @@ using Unity.Netcode;
 public class Bullet : NetworkBehaviour
 {
     bool isBulletHit = false;
-    public ulong bulletID = 5; // This is the ID of the player who fired the bullet
-    [SerializeField] private float despawnTime = 5f; // Time before despawning the object (in seconds)
+    public ulong bulletID = 5; 
+    [SerializeField] private float despawnTime = 5f; 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,14 +17,12 @@ public class Bullet : NetworkBehaviour
             collision.gameObject.CompareTag("LeftArm") ||
             collision.gameObject.CompareTag("RightArm"))
         {
-            // Check if the player the bullet hit is not the one who fired it
             var playerHealth = collision.gameObject.GetComponentInParent<Health>();
             if (playerHealth != null && playerHealth.OwnerClientId != bulletID)
             {
-                Debug.Log(playerHealth.OwnerClientId.ToString());
-                // Apply damage only if it's a different player
+                
                 collision.gameObject.GetComponent<TakeDamage>().TakeDamageAction();
-                isBulletHit = true; // Mark the bullet as hit
+                isBulletHit = true; 
             }
         }
     }

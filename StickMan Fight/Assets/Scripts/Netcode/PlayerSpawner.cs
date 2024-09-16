@@ -5,8 +5,13 @@ using Unity.Netcode;
 public class PlayerSpawner : NetworkBehaviour
 {
     [SerializeField] private List<Transform> spawnPoints;
-
+    //SceneChanger changer;
     private int currentPlayerIndex = 0;
+
+    private void Awake()
+    {
+        //changer = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneChanger>();
+    }
 
     public override void OnNetworkSpawn()
     {
@@ -34,7 +39,7 @@ public class PlayerSpawner : NetworkBehaviour
         player.transform.position = spawnPoint.position;
         player.transform.rotation = spawnPoint.rotation;
 
-        
         currentPlayerIndex++;
+        //changer.playercount++;
     }
 }

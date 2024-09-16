@@ -9,6 +9,7 @@ public class Movement : NetworkBehaviour
 {
     private PlayerInput input;
     private Vector2 moveVector = Vector2.zero;
+    
 
     public GameObject leftLeg;
     public GameObject rightLeg;
@@ -29,6 +30,7 @@ public class Movement : NetworkBehaviour
     private void Awake()
     {
         input = new PlayerInput();
+        
     }
 
     private void OnEnable()
@@ -73,6 +75,8 @@ public class Movement : NetworkBehaviour
         {
             walkMovement();
         }
+
+        
     }
 
     private void walkMovement()

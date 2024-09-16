@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Health : NetworkBehaviour
 {
+    SceneChanger changer;
+
     [SerializeField] Movement movement;
     [SerializeField] IgnoreCollisions ignorecollision;
     [SerializeField] Balance[] balances;
@@ -12,6 +14,11 @@ public class Health : NetworkBehaviour
     private NetworkVariable<int> health = new NetworkVariable<int>(100);
 
     [SerializeField] private TextMeshProUGUI healthtext;
+
+    private void Awake()
+    {
+        changer = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneChanger>();
+    }
 
     private void Start()
     {
@@ -26,13 +33,17 @@ public class Health : NetworkBehaviour
     {
         if (!IsOwner) return;
 
-        if (health.Value < 1)
+        // For example, change scene when the 'C' key is pressed (only on the server)
+/*        if (IsServer && Input.GetKeyDown(KeyCode.C))
+        {
+            changer.ChangeScene();
+        }*/
+
+        if (health.Value < 0)
         {
             health.Value = 0;
             healthtext.text = "0";
-            //Debug.Log("Player Dead");
             dead();
-            //stickmanRagdoll.OnDeath();
         }
         else
         {
@@ -81,12 +92,12 @@ public class Health : NetworkBehaviour
     {
         if (IsOwner)
         {
+            //changer.CurrentAlivePlayer -= 1;
             movement.enabled = false;
             ignorecollision.enabled = false;
 
             foreach (Balance balance in balances)
             {
-
                 balance.enabled = false;
             }
         }
