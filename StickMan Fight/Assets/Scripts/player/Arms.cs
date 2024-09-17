@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-public class Arms : MonoBehaviour
+public class Arms : NetworkBehaviour
 {
     [SerializeField] private InputActionReference aimDir;
     [SerializeField] private float shootingDelay = 0.5f; // Time between each shot in seconds
@@ -17,11 +18,15 @@ public class Arms : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (aimDir.action.enabled)
+        if (IsOwner)
         {
-            Vector2 aim = aimDir.action.ReadValue<Vector2>();
-            Playeraim = new Vector3(aim.x, aim.y, 0);
+            if (aimDir.action.enabled)
+            {
+                Vector2 aim = aimDir.action.ReadValue<Vector2>();
+                Playeraim = new Vector3(aim.x, aim.y, 0);
+            }
         }
+        
     }
 
     private void FixedUpdate()

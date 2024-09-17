@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class SceneChanger : NetworkBehaviour
 {
+    [SerializeField] PlayerCountTracker playercounttracker;
+
     public int playerCount = 0;
     public int currentAlivePlayer = 0;
     private bool gameStarted = false;
@@ -13,53 +15,46 @@ public class SceneChanger : NetworkBehaviour
 
     private void Awake()
     {
-        // Ensure this object is not destroyed when loading a new scene
         DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
-        if (IsServer)
+        startGameBtn.onClick.AddListener(() =>
         {
-           
-
-            // Make sure button click is assigned to a method
-            if (startGameBtn != null)
+            if (IsServer)
             {
-                startGameBtn.onClick.AddListener(StartGame);
+                StartGame();
             }
             else
             {
-                Debug.LogError("Start Game button is not assigned.");
+                Debug.Log("You are not the server");
             }
-        }
-    }
-
-    
-
-    
+            
+        });
+    }   
 
     private void Update()
     {
         // Only execute this if the game has started and we are on the server
         if (gameStarted && IsServer)
         {
-            Debug.Log($"Player Count: {playerCount}, Alive Players: {currentAlivePlayer}");
+            //Debug.Log($"Player Count: {playerCount}, Alive Players: {currentAlivePlayer}");
 
             // If only one player is alive, change to the next scene
-            if (currentAlivePlayer == 1)
+            /*if (currentAlivePlayer == 1)
             {
                 ChangeScene("Level2");
                 Debug.Log("Scene changed to Level2");
                 currentAlivePlayer = playerCount; // Reset alive players for the next level
-            }
+            }*/
         }
     }
 
     // Method to start the game
     private void StartGame()
     {
-        if (playerCount > 1) // Ensure there is more than one player
+        playerCount = playercounttracker.GetPlayerCount();
+        Debug.Log("Playercount:" + playerCount);
+
+        if (playerCount > 0) // Ensure there is more than one player
         {
             gameStarted = true;
             AssignPlayerInfo();
@@ -78,28 +73,6 @@ public class SceneChanger : NetworkBehaviour
         Debug.Log($"Player Count: {playerCount}, Alive Players: {currentAlivePlayer}");
     }
 
-    // Server-side: Called when a player connects
-    private void OnPlayerConnected(ulong clientId)
-    {
-        if (IsServer)
-        {
-            playerCount++;
-            currentAlivePlayer++;
-            Debug.Log($"Player {clientId} connected. Total players: {playerCount}");
-        }
-    }
-
-    // Server-side: Called when a player disconnects
-    private void OnPlayerDisconnected(ulong clientId)
-    {
-        if (IsServer)
-        {
-            playerCount--;
-            currentAlivePlayer--;
-            Debug.Log($"Player {clientId} disconnected. Remaining players: {playerCount}");
-        }
-    }
-
     // Method to change the scene, only the server can do this
     public void ChangeScene(string sceneToLoad)
     {
@@ -112,4 +85,29 @@ public class SceneChanger : NetworkBehaviour
             Debug.LogError("Only the server can change the scene.");
         }
     }
+
+
+
+
+    /*// Server-side: Called when a player connects
+  private void OnPlayerConnected(ulong clientId)
+  {
+      if (IsServer)
+      {
+          playerCount++;
+          currentAlivePlayer++;
+          Debug.Log($"Player {clientId} connected. Total players: {playerCount}");
+      }
+  }
+
+  // Server-side: Called when a player disconnects
+  private void OnPlayerDisconnected(ulong clientId)
+  {
+      if (IsServer)
+      {
+          playerCount--;
+          currentAlivePlayer--;
+          Debug.Log($"Player {clientId} disconnected. Remaining players: {playerCount}");
+      }
+  }*/
 }

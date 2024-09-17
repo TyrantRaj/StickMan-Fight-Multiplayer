@@ -92,7 +92,7 @@ public class Health : NetworkBehaviour
     {
         if (IsOwner)
         {
-            //changer.CurrentAlivePlayer -= 1;
+            changer.currentAlivePlayer -= 1;
             movement.enabled = false;
             ignorecollision.enabled = false;
 

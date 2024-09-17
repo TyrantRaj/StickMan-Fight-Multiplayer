@@ -10,10 +10,6 @@ public class PlayerCountTracker : MonoBehaviour
         {
             Debug.Log("Player Count: " + GetPlayerCount());
         }
-        else
-        {
-            Debug.Log("not working");
-        }
     }
 
     // Method to get the current player count

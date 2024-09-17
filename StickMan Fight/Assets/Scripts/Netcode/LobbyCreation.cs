@@ -17,7 +17,6 @@ public class LobbyCreation : MonoBehaviour
     [SerializeField] private TMP_InputField roomname;
     [SerializeField] private Button joincodeBtn;
     [SerializeField] private TMP_InputField joincodeInput;
-    //[SerializeField] private TextMeshProUGUI lobbynaemText;
 
     public int Max_Players = 4;
     private Lobby joinedLobby;
@@ -30,13 +29,13 @@ public class LobbyCreation : MonoBehaviour
         createLobbyBtn.onClick.AddListener(() =>
         {
             CreateLobby(roomname.text, false);
-            
+
             hideUI();
         });
 
         quickJoinBtn.onClick.AddListener(() =>
         {
-            
+
             QuickJoin();
             hideUI();
         });
@@ -57,9 +56,11 @@ public class LobbyCreation : MonoBehaviour
 
     private void HandleHeartBeat()
     {
-        if (IsLobbyHost()) {
+        if (IsLobbyHost())
+        {
             heartbeattimer -= Time.deltaTime;
-            if (heartbeattimer < 0) {
+            if (heartbeattimer < 0)
+            {
                 float heartbeattimerMax = 15f;
                 heartbeattimer = heartbeattimerMax;
                 LobbyService.Instance.SendHeartbeatPingAsync(joinedLobby.Id);
@@ -86,12 +87,13 @@ public class LobbyCreation : MonoBehaviour
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
             }
         }
-        catch (AuthenticationException e) { 
+        catch (AuthenticationException e)
+        {
             Debug.LogException(e);
         }
-        
-        
-    } 
+
+
+    }
 
     public async void CreateLobby(string lobbyname, bool isPrivate)
     {
@@ -105,7 +107,8 @@ public class LobbyCreation : MonoBehaviour
             NetworkManager.Singleton.StartHost();
 
         }
-        catch (LobbyServiceException e) {
+        catch (LobbyServiceException e)
+        {
             Debug.Log(e.ToString());
         }
     }
@@ -119,21 +122,24 @@ public class LobbyCreation : MonoBehaviour
             NetworkManager.Singleton.StartClient();
 
         }
-        catch (LobbyServiceException e) {
+        catch (LobbyServiceException e)
+        {
             Debug.Log(e.ToString());
         }
     }
 
-    public async void joinwithCode(string code) {
+    public async void joinwithCode(string code)
+    {
         try
         {
             joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(code);
             NetworkManager.Singleton.StartClient();
         }
-        catch (LobbyServiceException e) {
+        catch (LobbyServiceException e)
+        {
             Debug.Log(e);
         }
-        
+
     }
 
     private void hideUI()
