@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
@@ -6,11 +5,10 @@ using UnityEngine;
 public class Health : NetworkBehaviour
 {
     SceneChanger changer;
-
+    private bool isdead = false;
     [SerializeField] Movement movement;
     [SerializeField] IgnoreCollisions ignorecollision;
     [SerializeField] Balance[] balances;
-    // Use NetworkVariable for health
     private NetworkVariable<int> health = new NetworkVariable<int>(100);
 
     [SerializeField] private TextMeshProUGUI healthtext;
@@ -22,32 +20,23 @@ public class Health : NetworkBehaviour
 
     private void Start()
     {
-        // Ensure only the owner of the object controls the health updates
-        if (IsOwner)
-        {
-            health.OnValueChanged += OnHealthChanged;
-        }
+        health.OnValueChanged += OnHealthChanged; // Update UI for all clients
     }
 
     private void Update()
     {
-        if (!IsOwner) return;
-
-        // For example, change scene when the 'C' key is pressed (only on the server)
-/*        if (IsServer && Input.GetKeyDown(KeyCode.C))
+        if (IsOwner)
         {
-            changer.ChangeScene();
-        }*/
-
-        if (health.Value < 0)
-        {
-            health.Value = 0;
-            healthtext.text = "0";
-            dead();
-        }
-        else
-        {
-            healthtext.text = health.Value.ToString();
+            if (health.Value <= 0)
+            {
+                health.Value = 0;
+                healthtext.text = "0";
+                dead();
+            }
+            else
+            {
+                healthtext.text = health.Value.ToString();
+            }
         }
     }
 
@@ -56,12 +45,9 @@ public class Health : NetworkBehaviour
         healthtext.text = newValue.ToString();
     }
 
-    // This function can be called by the server to reduce health
     [ServerRpc]
     public void TakeDamageServerRpc(int body_part)
     {
-        if (!IsServer) return;  // Only the server should modify the health
-
         switch (body_part)
         {
             case 0:
@@ -80,26 +66,36 @@ public class Health : NetworkBehaviour
                 health.Value -= Random.Range(5, 20);
                 break;
         }
-
-        // Ensure health is synchronized across all clients
-        if (health.Value < 0)
-        {
-            health.Value = 0;
-        }
     }
 
     private void dead()
     {
         if (IsOwner)
         {
-            changer.currentAlivePlayer -= 1;
-            movement.enabled = false;
-            ignorecollision.enabled = false;
-
-            foreach (Balance balance in balances)
+            if (!isdead)
             {
-                balance.enabled = false;
+                reduce_alivecountServerRpc();
+                movement.enabled = false;
+                ignorecollision.enabled = false;
+
+                foreach (Balance balance in balances)
+                {
+                    balance.enabled = false;
+                }
+                isdead = true;
             }
         }
+    }
+
+    [ServerRpc]
+    private void reduce_alivecountServerRpc()
+    {
+        changer.UpdateAliveCountServerRpc();
+    }
+
+    [ClientRpc]
+    public void ResetHealthClientRpc()
+    {
+        health.Value = 100; // Set this to your default health value
     }
 }

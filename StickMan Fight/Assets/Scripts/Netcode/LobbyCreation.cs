@@ -8,10 +8,12 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 
 public class LobbyCreation : MonoBehaviour
 {
+    [SerializeField] private SceneChanger changer;
     [SerializeField] private Button createLobbyBtn;
     [SerializeField] private Button quickJoinBtn;
     [SerializeField] private TMP_InputField roomname;
@@ -104,6 +106,7 @@ public class LobbyCreation : MonoBehaviour
                 IsPrivate = isPrivate,
             });
             showLog();
+            Debug.Log("Host Started");
             NetworkManager.Singleton.StartHost();
 
         }
@@ -145,6 +148,9 @@ public class LobbyCreation : MonoBehaviour
     private void hideUI()
     {
         gameObject.SetActive(false);
+        //changer.ChangeScene("Lobby");
+        SceneManager.LoadScene("Lobby");
+        //NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void showLog()
