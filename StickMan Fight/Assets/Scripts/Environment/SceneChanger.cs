@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : NetworkBehaviour
 {
     [SerializeField] PlayerCountTracker playercounttracker;
+    [SerializeField] Transform[] spawnPoints; // Array of spawn points
     public int playerCount = 0;
     public int currentAlivePlayer = 0;
     private bool gameStarted = false;
@@ -48,7 +50,7 @@ public class SceneChanger : NetworkBehaviour
         {
             gameStarted = true;
             AssignPlayerInfo();
-            ChangeScene("Level1");
+            StartCoroutine(ChangeSceneWithDelay("Level1", 3f)); // Add 3 seconds delay before starting Level1
         }
         else
         {
@@ -60,6 +62,13 @@ public class SceneChanger : NetworkBehaviour
     {
         currentAlivePlayer = playerCount;
         Debug.Log($"Player Count: {playerCount}, Alive Players: {currentAlivePlayer}");
+    }
+
+    // Change scene after a delay
+    private IEnumerator ChangeSceneWithDelay(string sceneToLoad, float delay)
+    {
+        yield return new WaitForSeconds(delay); // Wait for the specified delay
+        ChangeScene(sceneToLoad);
     }
 
     public void ChangeScene(string sceneToLoad)
@@ -85,7 +94,7 @@ public class SceneChanger : NetworkBehaviour
 
         if (currentAlivePlayer == 1 && gameStarted)
         {
-            ChangeScene("Level2");
+            StartCoroutine(ChangeSceneWithDelay("Level2", 3f)); // Add 3 seconds delay before switching to Level2
             AssignPlayerInfo();
         }
     }
@@ -94,16 +103,17 @@ public class SceneChanger : NetworkBehaviour
     {
         if (IsServer)
         {
-            ResetPlayerHealthOnServerServerRpc(); // Call server-side method to reset health
+            ResetPlayerHealthOnServer(); 
         }
     }
 
-    [ServerRpc]
-    private void ResetPlayerHealthOnServerServerRpc()
+    private void ResetPlayerHealthOnServer()
     {
         foreach (var health in FindObjectsOfType<Health>())
         {
-            health.ResetHealthClientRpc(); // Notify all clients to reset health
+            health.ResetHealthServerRpc(); // Use server to reset health for all players
         }
     }
+
+ 
 }

@@ -101,7 +101,7 @@ public class LobbyCreation : MonoBehaviour
     {
         try
         {
-            joinedLobby = await LobbyService.Instance.CreateLobbyAsync(lobbyname, Max_Players, new CreateLobbyOptions
+            joinedLobby = await LobbyService.Instance.CreateLobbyAsync("a", Max_Players, new CreateLobbyOptions
             {
                 IsPrivate = isPrivate,
             });

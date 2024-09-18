@@ -9,13 +9,18 @@ public class Health : NetworkBehaviour
     [SerializeField] Movement movement;
     [SerializeField] IgnoreCollisions ignorecollision;
     [SerializeField] Balance[] balances;
-    private NetworkVariable<int> health = new NetworkVariable<int>(100);
+    [SerializeField] Arms arm;
+    canvas player_canvas;
+
+    // Ensure that only the server can modify this variable
+    private NetworkVariable<int> health = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     [SerializeField] private TextMeshProUGUI healthtext;
 
     private void Awake()
     {
         changer = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneChanger>();
+        player_canvas = GameObject.FindFirstObjectByType<canvas>();
     }
 
     private void Start()
@@ -29,7 +34,6 @@ public class Health : NetworkBehaviour
         {
             if (health.Value <= 0)
             {
-                health.Value = 0;
                 healthtext.text = "0";
                 dead();
             }
@@ -77,7 +81,7 @@ public class Health : NetworkBehaviour
                 reduce_alivecountServerRpc();
                 movement.enabled = false;
                 ignorecollision.enabled = false;
-
+                arm.enabled = false;
                 foreach (Balance balance in balances)
                 {
                     balance.enabled = false;
@@ -87,15 +91,35 @@ public class Health : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    private void BringAliveClientRpc()
+    {
+        player_canvas.enabled = false;
+        player_canvas.enabled = true;
+        if (isdead)
+        {
+            movement.enabled = true;
+            ignorecollision.enabled = true;
+            arm.enabled = true;
+            foreach (Balance balance in balances)
+            {
+                balance.enabled = true;
+            }
+            isdead = false;
+        }
+    }
+
     [ServerRpc]
     private void reduce_alivecountServerRpc()
     {
         changer.UpdateAliveCountServerRpc();
     }
 
-    [ClientRpc]
-    public void ResetHealthClientRpc()
+    // Health reset is done on the server and synced to all clients
+    [ServerRpc(RequireOwnership = false)]
+    public void ResetHealthServerRpc()
     {
-        health.Value = 100; // Set this to your default health value
+        health.Value = 100; // Reset health to default value on server
+        BringAliveClientRpc();
     }
 }
