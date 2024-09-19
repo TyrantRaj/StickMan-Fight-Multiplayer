@@ -131,7 +131,7 @@ TextureImporter:
         width: 303
         height: 179
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -139,6 +139,27 @@ TextureImporter:
       bones: []
       spriteID: e0ed3ac7131f05e4b85039b32cd0d0f7
       internalID: -688042670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: FreeArt_GunConstructionKit_v03_show_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 391
+        width: 932
+        height: 327
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3243e524c2bad9d46a4bf9f2018e8c74
+      internalID: -604362971
       vertices: []
       indices: 
       edges: []
@@ -154,6 +175,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      FreeArt_GunConstructionKit_v03_show_0: -604362971
       pistol: -688042670
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

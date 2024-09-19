@@ -6,6 +6,8 @@ public class PlayerShooting : NetworkBehaviour
     public GameObject bulletPrefab;
     public Transform firePoint;
     public float bulletSpeed = 25f;
+    [HideInInspector]
+    public bool hasGun = false;
 
     void Update()
     {
@@ -15,10 +17,11 @@ public class PlayerShooting : NetworkBehaviour
     public void shoot()
     {
         // Only allow the local player to shoot
-        if (!IsOwner) return;
-
-        // Call the ServerRpc to spawn and assign the bullet
-        ShootServerRpc(firePoint.position, firePoint.right);
+        if (IsOwner && hasGun)
+        {
+            // Call the ServerRpc to spawn and assign the bullet
+            ShootServerRpc(firePoint.position, firePoint.right);
+        }
     }
 
     // Request the server to spawn a bullet

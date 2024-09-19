@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3101334154173349217}
   - component: {fileID: 6866565803225721968}
   m_Layer: 0
-  m_Name: pistolSprite
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 116263511276514192}
   - component: {fileID: 4834760937155696379}
   - component: {fileID: 1302663431431626477}
+  - component: {fileID: 9155093717028782557}
   m_Layer: 0
   m_Name: Pistol
   m_TagString: Gun
@@ -171,7 +172,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.010991305}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -182,7 +183,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.535923, y: 0.3136546}
   m_EdgeRadius: 0
 --- !u!50 &1302663431431626477
 Rigidbody2D:
@@ -211,3 +212,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &9155093717028782557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8747725936358889605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ecc28580db195d48b86681dc10ac324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GunNumber: 0

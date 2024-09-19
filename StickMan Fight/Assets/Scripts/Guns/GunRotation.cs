@@ -4,47 +4,56 @@ using Unity.Netcode;
 
 public class GunRotation : NetworkBehaviour
 {
-    [SerializeField] private InputActionReference aimDir;
-    [SerializeField] private GameObject GunSprite;
+    [SerializeField] private InputActionReference aimDir;  // Input action for aiming
+    [SerializeField] private SpriteRenderer gunSprite;  // Reference to the gun sprite renderer
+    
+    private void OnEnable()
+    {
+        if (aimDir != null)
+        {
+            aimDir.action.Enable();
+        }
+        else
+        {
+            Debug.LogError("aimDir is not assigned.");
+        }
+    }
 
-    void FixedUpdate()
+    private void OnDisable()
+    {
+        if (aimDir != null)
+        {
+            aimDir.action.Disable();
+        }
+    }
+
+    private void Update()
     {
         if (IsOwner)
         {
+            //Debug.Log("working");
             Vector2 aim = aimDir.action.ReadValue<Vector2>();
-
-            if (aim != Vector2.zero)
+            if (aim != Vector2.zero && gunSprite != null)
             {
-                if ((aim.x > 0 && aim.y > 0) || (aim.x > 0 && aim.y < 0))
-                {
-                    ChangeSpriteOnServerServerRpc(true); // Flip sprite to the left
-                }
-                else
-                {
-                    ChangeSpriteOnServerServerRpc(false); // Flip sprite to the right
-                }
+                bool flipLeft = aim.x < 0;
+                
+                ChangeSpriteOnServerServerRpc(flipLeft);
             }
         }
     }
 
-    // Send the sprite flip request from the client to the server
     [ServerRpc]
     private void ChangeSpriteOnServerServerRpc(bool flipLeft)
     {
         ChangeSpriteOnClientsClientRpc(flipLeft);
     }
 
-    // Change the sprite on all clients
     [ClientRpc]
     private void ChangeSpriteOnClientsClientRpc(bool flipLeft)
     {
-        if (flipLeft)
+        if (gunSprite != null)
         {
-            GunSprite.gameObject.GetComponent<SpriteRenderer>().flipY = false; // Left
-        }
-        else
-        {
-            GunSprite.gameObject.GetComponent<SpriteRenderer>().flipY = true; // Right
+            gunSprite.flipY = flipLeft;
         }
     }
 }
