@@ -5,73 +5,87 @@ using Unity.Netcode;
 
 public class PickGun : NetworkBehaviour
 {
-    [SerializeField] GameObject[] Guns;
-    [SerializeField] PlayerShooting shooting;
+    [SerializeField] GameObject[] Guns;          // List of gun game objects
+    [SerializeField] PlayerShooting shooting;    // Reference to player shooting script
+    private int GunNumber;                       // The index of the currently picked gun
 
-    // Use a NetworkVariable to track gun activation
-    private NetworkVariable<bool> isGunActive = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    // Use a NetworkVariable<int> to track the currently equipped gun across all clients
+    private NetworkVariable<int> equippedGunNumber = new NetworkVariable<int>(-1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     private void Start()
     {
+        // Disable all guns at the start
         foreach (GameObject gun in Guns)
         {
             gun.SetActive(false);
         }
 
-        // Subscribe to the NetworkVariable's value change event
-        isGunActive.OnValueChanged += OnGunActivationChanged;
+        // Subscribe to the NetworkVariable's value change event to sync the equipped gun
+        equippedGunNumber.OnValueChanged += OnGunEquippedChanged;
     }
 
     private void OnDestroy()
     {
         // Unsubscribe when the object is destroyed
-        isGunActive.OnValueChanged -= OnGunActivationChanged;
+        equippedGunNumber.OnValueChanged -= OnGunEquippedChanged;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (IsOwner)
+        if (IsOwner && collision.gameObject.CompareTag("Gun"))
         {
-            if (collision.gameObject.CompareTag("Gun"))
+            Debug.Log("Gun found");
+
+            // Get the gun number from the GunIndex component of the collided object
+            GunNumber = collision.gameObject.GetComponent<GunIndex>().GunNumber;
+
+            // Activate the gun locally for the player
+            EquipGun(GunNumber);
+
+            // Set the NetworkVariable to sync the gun across all clients
+            equippedGunNumber.Value = GunNumber;
+
+            // Pass the NetworkObject reference to the ServerRpc for despawning the gun in the world
+            var networkObject = collision.gameObject.GetComponent<NetworkObject>();
+            if (networkObject != null)
             {
-                Debug.Log("Gun found");
-
-                /*pistol = 0
-                AK = 1*/
-
-                Guns[collision.gameObject.GetComponent<GunIndex>().GunNumber].SetActive(true);
-                shooting.hasGun = true;
-                // Set the NetworkVariable to true to trigger activation across all clients
-                isGunActive.Value = true;
-
-                // Pass the NetworkObject reference to the ServerRpc for despawning
-                var networkObject = collision.gameObject.GetComponent<NetworkObject>();
-                if (networkObject != null)
-                {
-                    despawngunServerRpc(networkObject);
-                }
+                despawngunServerRpc(networkObject);
             }
         }
     }
 
-    // ServerRpc to despawn the gun object
+    // Equip the gun locally and update the shooting script
+    private void EquipGun(int gunNumber)
+    {
+        // Deactivate all guns first
+        foreach (GameObject gun in Guns)
+        {
+            gun.SetActive(false);
+        }
+
+        // Activate the specific gun by its index
+        Guns[gunNumber].SetActive(true);
+        shooting.currentGun = gunNumber;
+        shooting.hasGun = true;
+    }
+
+    // ServerRpc to despawn the gun object on the server
     [ServerRpc]
     private void despawngunServerRpc(NetworkObjectReference gunReference)
     {
-        // Despawn the object only on the server
         if (gunReference.TryGet(out NetworkObject gunNetworkObject))
         {
-            gunNetworkObject.Despawn(); // Despawn the object
+            gunNetworkObject.Despawn(); // Despawn the gun object on the server
         }
     }
 
-    // This function will be called when the NetworkVariable changes
-    private void OnGunActivationChanged(bool oldValue, bool newValue)
+    // This function will be called when the NetworkVariable value changes to sync the equipped gun across clients
+    private void OnGunEquippedChanged(int oldGunNumber, int newGunNumber)
     {
-        // When the NetworkVariable value changes to true, activate the gun on all clients
-        if (newValue)
+        // Equip the gun on all clients based on the new value
+        if (newGunNumber >= 0 && newGunNumber < Guns.Length)
         {
-            Guns[0].SetActive(true);
+            EquipGun(newGunNumber);
         }
     }
 }

@@ -4,23 +4,30 @@ using UnityEngine;
 public class PlayerShooting : NetworkBehaviour
 {
     public GameObject bulletPrefab;
-    public Transform firePoint;
+    public Transform[] firePoint;
     public float bulletSpeed = 25f;
     [HideInInspector]
     public bool hasGun = false;
-
-    void Update()
-    {
-        //shoot();
-    }
+    public int currentGun;
 
     public void shoot()
     {
         // Only allow the local player to shoot
-        if (IsOwner && hasGun)
+        if (IsOwner)
         {
-            // Call the ServerRpc to spawn and assign the bullet
-            ShootServerRpc(firePoint.position, firePoint.right);
+            if (hasGun)
+            {
+                Debug.Log("Shooting");
+                // Call the ServerRpc to spawn and assign the bullet
+                ShootServerRpc(firePoint[currentGun].position, firePoint[currentGun].right);
+            }
+            else {
+                Debug.Log("hasgun failed");
+            }
+        }
+        else
+        {
+            Debug.Log("isowner failed");
         }
     }
 

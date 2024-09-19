@@ -15,8 +15,7 @@ public class Arms : NetworkBehaviour
 
     public Rigidbody2D armRB;
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         if (IsOwner)
         {
@@ -26,11 +25,7 @@ public class Arms : NetworkBehaviour
                 Playeraim = new Vector3(aim.x, aim.y, 0);
             }
         }
-        
-    }
 
-    private void FixedUpdate()
-    {
         // Left Arm Rotation
         if (armRB.tag == "LeftArm")
         {

@@ -7,7 +7,7 @@ public class GunRotation : NetworkBehaviour
     [SerializeField] private InputActionReference aimDir;  // Input action for aiming
     [SerializeField] private SpriteRenderer gunSprite;  // Reference to the gun sprite renderer
     
-    private void OnEnable()
+    /*private void OnEnable()
     {
         if (aimDir != null)
         {
@@ -25,7 +25,7 @@ public class GunRotation : NetworkBehaviour
         {
             aimDir.action.Disable();
         }
-    }
+    }*/
 
     private void Update()
     {
