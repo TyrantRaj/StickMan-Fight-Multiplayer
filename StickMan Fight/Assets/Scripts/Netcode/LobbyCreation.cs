@@ -26,6 +26,7 @@ public class LobbyCreation : MonoBehaviour
     [SerializeField] private TMP_InputField roomname;
     [SerializeField] private Button joincodeBtn;
     [SerializeField] private TMP_InputField joincodeInput;
+    [SerializeField] private TMP_Text codeText;
 
     public int Max_Players = 4;
     private Lobby joinedLobby;
@@ -159,7 +160,7 @@ public class LobbyCreation : MonoBehaviour
                 IsPrivate = isPrivate,
             });
 
-            Allocation allocation = await AllocateRelay();
+            /*Allocation allocation = await AllocateRelay();
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
             string relayJoinCode = await GetRelayJoinCode(allocation);
@@ -170,7 +171,7 @@ public class LobbyCreation : MonoBehaviour
                     {KEY_RELAY_JOIN_CODE, new DataObject(DataObject.VisibilityOptions.Member,relayJoinCode)}
 
                 }
-            });
+            });*/
 
             showLog();
             Debug.Log("Host Started");
@@ -189,11 +190,11 @@ public class LobbyCreation : MonoBehaviour
         {
             joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
 
-            string relayJoinCode =  joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
+            /*string relayJoinCode =  joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
 
             JoinAllocation joinallocation = await JoinRelay(relayJoinCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));
-
+*/
             showLog(); 
             NetworkManager.Singleton.StartClient();
 
@@ -210,10 +211,10 @@ public class LobbyCreation : MonoBehaviour
         {
             joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(code);
 
-            string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
+            /*string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
 
             JoinAllocation joinallocation = await JoinRelay(relayJoinCode);
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));*/
 
             NetworkManager.Singleton.StartClient();
         }
@@ -235,5 +236,6 @@ public class LobbyCreation : MonoBehaviour
     private void showLog()
     {
         Debug.Log("Lobby Created:" + joinedLobby.Name + "\n Lobby Code:" + joinedLobby.LobbyCode.ToString());
+        codeText.text = joinedLobby.LobbyCode.ToString();
     }
 }
