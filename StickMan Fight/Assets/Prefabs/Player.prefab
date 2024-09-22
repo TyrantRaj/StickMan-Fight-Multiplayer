@@ -1609,9 +1609,11 @@ GameObject:
   - component: {fileID: -914792359390996017}
   - component: {fileID: 2032999268551666285}
   - component: {fileID: 3020103153462358188}
+  - component: {fileID: 9184090262228124030}
+  - component: {fileID: 4610843871021939234}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1791,8 +1793,8 @@ MonoBehaviour:
   - {fileID: 2931633538537426805}
   - {fileID: 8951705146610128152}
   bulletSpeed: 30
-  recoilForce: 1
-  recoilAngle: 3
+  recoilForce: 2
+  recoilAngle: 4
   hasGun: 0
   currentGun: 0
   rb: {fileID: 2015589299978953528}
@@ -1830,6 +1832,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c926f5cf4ce634b8ca5662aecd817f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &9184090262228124030
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7591649395319588335}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!233 &4610843871021939234
+HingeJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7591649395319588335}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 7333071330677997005}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 1
+  m_Anchor: {x: 0, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0.788}
+  m_UseMotor: 0
+  m_Motor:
+    m_MotorSpeed: 0
+    m_MaximumMotorForce: 10000
+  m_UseLimits: 0
+  m_AngleLimits:
+    m_LowerAngle: 0
+    m_UpperAngle: 359
 --- !u!1 &7827263758139450566
 GameObject:
   m_ObjectHideFlags: 0

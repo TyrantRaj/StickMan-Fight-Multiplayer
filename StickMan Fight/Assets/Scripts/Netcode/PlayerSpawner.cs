@@ -8,11 +8,6 @@ public class PlayerSpawner : NetworkBehaviour
     //SceneChanger changer;
     private int currentPlayerIndex = 0;
 
-    private void Awake()
-    {
-        //changer = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneChanger>();
-    }
-
     public override void OnNetworkSpawn()
     {
         if (IsServer)
@@ -31,11 +26,11 @@ public class PlayerSpawner : NetworkBehaviour
 
         GameObject player = NetworkManager.Singleton.ConnectedClients[OwnerClientId].PlayerObject.gameObject;
 
-        
+
         int spawnIndex = currentPlayerIndex % spawnPoints.Count;
         Transform spawnPoint = spawnPoints[spawnIndex];
 
-       
+
         player.transform.position = spawnPoint.position;
         player.transform.rotation = spawnPoint.rotation;
 

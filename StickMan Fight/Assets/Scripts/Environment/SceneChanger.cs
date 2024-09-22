@@ -35,14 +35,11 @@ public class SceneChanger : NetworkBehaviour
     {
         if (IsHost)
         {
+            startGameBtn.gameObject.SetActive(true);
             startGameBtn.onClick.AddListener(() =>
             {
                 StartGame();
             });
-        }
-        else
-        {
-            startGameBtn.gameObject.SetActive(false);
         }
     }
 
