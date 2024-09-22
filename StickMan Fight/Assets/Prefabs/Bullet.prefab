@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletID: 5
-  despawnTime: 5
+  despawnTime: 3
 --- !u!58 &-1511217471651605465
 CircleCollider2D:
   m_ObjectHideFlags: 0

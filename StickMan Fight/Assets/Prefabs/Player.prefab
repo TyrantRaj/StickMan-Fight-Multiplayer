@@ -774,7 +774,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRotation: 0
-  force: 500
+  force: 300
 --- !u!114 &4840078389224757165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1170,7 +1170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRotation: 0
-  force: 500
+  force: 300
 --- !u!114 &4892737882932546460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1791,8 +1791,12 @@ MonoBehaviour:
   - {fileID: 2931633538537426805}
   - {fileID: 8951705146610128152}
   bulletSpeed: 30
+  recoilForce: 1
+  recoilAngle: 3
   hasGun: 0
   currentGun: 0
+  rb: {fileID: 2015589299978953528}
+  arm: {fileID: 4622756620571706328}
 --- !u!114 &2032999268551666285
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,7 +2174,6 @@ MonoBehaviour:
   - {fileID: 8689898326846499201}
   - {fileID: 447799367445410697}
   shooting: {fileID: -914792359390996017}
-  GunNumber: 0
 --- !u!1 &8689898326846499201
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRotation: 0
-  force: 500
+  force: 300
 --- !u!114 &90915111888714548
 MonoBehaviour:
   m_ObjectHideFlags: 0

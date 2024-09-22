@@ -63,7 +63,7 @@ public class Arms : NetworkBehaviour
         // Wait for the specified delay before the next shot
         yield return new WaitForSeconds(shootingDelay[shooting.currentGun]);
 
-        shooting.shoot(); // Second shot, add more shooting logic as needed
+        //shooting.shoot(); // Second shot, add more shooting logic as needed
 
         // After shooting, reset the shooting state
         isShooting = false;

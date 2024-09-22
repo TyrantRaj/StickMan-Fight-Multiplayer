@@ -4,12 +4,26 @@ using UnityEngine;
 public class PlayerShooting : NetworkBehaviour
 {
     public GameObject bulletPrefab;
-    public Transform[] firePoint;
+    public Transform[] firePoint; // Fire points (from different guns)
     public float bulletSpeed = 25f;
+    public float recoilForce = 5f;  // Recoil force applied to the arm
+    public float recoilAngle = 5f;  // Max angle deviation for recoil
 
     [HideInInspector]
     public bool hasGun = false;
     public int currentGun;
+
+    [SerializeField] private Rigidbody2D rb;
+    public Transform arm; // The player's arm or gun Transform
+
+    // Ensure input only triggers once per button press
+    void Update()
+    {
+        if (IsOwner && Input.GetButtonDown("Fire1"))
+        {
+            shoot();
+        }
+    }
 
     public void shoot()
     {
@@ -18,41 +32,60 @@ public class PlayerShooting : NetworkBehaviour
         {
             if (hasGun)
             {
-                //Debug.Log("Shooting");
-                // Call the ServerRpc to spawn and assign the bullet
-                ShootServerRpc(firePoint[currentGun].position, firePoint[currentGun].right);
+                Debug.Log("Shooting with gun: " + currentGun);
+
+                // Apply recoil rotation to the arm/gun
+                ApplyRecoil();
+
+                // Call the ServerRpc to spawn and assign the bullet with adjusted direction
+                Vector3 shootDirection = firePoint[currentGun].right;
+                ShootServerRpc(firePoint[currentGun].position, shootDirection);
             }
         }
         else
         {
-            Debug.Log("isowner failed");
+            Debug.Log("isOwner failed");
         }
     }
 
-    // Request the server to spawn a bullet
+    // Apply recoil rotation to the arm in addition to force
+    private void ApplyRecoil()
+    {
+        // Apply slight random angle change to simulate recoil
+        float randomRecoilAngle = Random.Range(-recoilAngle, recoilAngle); // Random recoil angle within set range
+        arm.Rotate(0, 0, randomRecoilAngle); // Apply recoil rotation to the arm
+
+        // Get the direction of the shot (opposite direction of bullet)
+        Vector2 recoilDirection = -firePoint[currentGun].right;
+
+        // Apply force to the player's Rigidbody2D in the opposite direction of the shot
+        rb.AddForce(recoilDirection * recoilForce, ForceMode2D.Impulse);
+    }
+
     [ServerRpc]
     public void ShootServerRpc(Vector3 position, Vector3 direction)
     {
-        // Instantiate the bullet on the server
+        Debug.Log("Server spawning bullet");
+
+        // Instantiate the bullet
         GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.identity);
+
+        // Adjust bullet velocity based on the current firePoint direction
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
 
-        // Spawn the bullet across the network
+        // Spawn bullet on the network
         var bulletNetworkObject = bullet.GetComponent<NetworkObject>();
         bulletNetworkObject.Spawn();
 
-        // Send the bullet's NetworkObjectId and OwnerClientId to all clients
+        // Assign bullet to the shooter
         AssignBulletIDClientRpc(bulletNetworkObject.NetworkObjectId, OwnerClientId);
     }
 
-    // This ClientRpc sends the bullet's NetworkObjectId and the owner's ClientId to all clients
     [ClientRpc]
     private void AssignBulletIDClientRpc(ulong bulletNetworkObjectId, ulong ownerClientId)
     {
-        // Find the bullet by its NetworkObjectId
+        // Find bullet and assign ownership
         NetworkObject bulletNetworkObject = NetworkManager.Singleton.SpawnManager.SpawnedObjects[bulletNetworkObjectId];
-
-        // Assign the bullet ID (which is the ClientId of the player who shot it)
         if (bulletNetworkObject != null)
         {
             bulletNetworkObject.GetComponent<Bullet>().bulletID = ownerClientId;
