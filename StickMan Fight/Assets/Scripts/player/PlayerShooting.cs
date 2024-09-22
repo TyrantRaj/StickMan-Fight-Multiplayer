@@ -6,6 +6,7 @@ public class PlayerShooting : NetworkBehaviour
     public GameObject bulletPrefab;
     public Transform[] firePoint;
     public float bulletSpeed = 25f;
+
     [HideInInspector]
     public bool hasGun = false;
     public int currentGun;
@@ -17,12 +18,9 @@ public class PlayerShooting : NetworkBehaviour
         {
             if (hasGun)
             {
-                Debug.Log("Shooting");
+                //Debug.Log("Shooting");
                 // Call the ServerRpc to spawn and assign the bullet
                 ShootServerRpc(firePoint[currentGun].position, firePoint[currentGun].right);
-            }
-            else {
-                Debug.Log("hasgun failed");
             }
         }
         else

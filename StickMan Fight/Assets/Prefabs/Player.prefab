@@ -521,7 +521,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimDir: {fileID: -4847360973894168712, guid: ce86c70b5cf66c64ab094529d95cc17b, type: 3}
-  shootingDelay: 0.5
+  shootingDelay:
+  - 0.5
+  - 0.1
   shooting: {fileID: -914792359390996017}
   armRB: {fileID: 2015589299978953528}
 --- !u!114 &3232371470804611278
@@ -2015,7 +2017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimDir: {fileID: -4847360973894168712, guid: ce86c70b5cf66c64ab094529d95cc17b, type: 3}
-  shootingDelay: 0.5
+  shootingDelay: []
   shooting: {fileID: -914792359390996017}
   armRB: {fileID: 3529414844155897504}
 --- !u!114 &6593676739186621771
@@ -2168,6 +2170,7 @@ MonoBehaviour:
   - {fileID: 8689898326846499201}
   - {fileID: 447799367445410697}
   shooting: {fileID: -914792359390996017}
+  GunNumber: 0
 --- !u!1 &8689898326846499201
 GameObject:
   m_ObjectHideFlags: 0

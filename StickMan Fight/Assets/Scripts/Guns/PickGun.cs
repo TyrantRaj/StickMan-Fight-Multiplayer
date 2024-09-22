@@ -34,7 +34,7 @@ public class PickGun : NetworkBehaviour
     {
         if (IsOwner && collision.gameObject.CompareTag("Gun"))
         {
-            Debug.Log("Gun found");
+            //Debug.Log("Gun found");
 
             // Get the gun number from the GunIndex component of the collided object
             GunNumber = collision.gameObject.GetComponent<GunIndex>().GunNumber;

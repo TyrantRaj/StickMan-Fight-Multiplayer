@@ -7,7 +7,7 @@ using Unity.Netcode;
 public class Arms : NetworkBehaviour
 {
     [SerializeField] private InputActionReference aimDir;
-    [SerializeField] private float shootingDelay = 0.5f; // Time between each shot in seconds
+    [SerializeField] private float[] shootingDelay; // Time between each shot in seconds
     [SerializeField] private PlayerShooting shooting; // Reference to your shooting script
     private Vector3 Playeraim;
     private int speed = 10;
@@ -61,7 +61,7 @@ public class Arms : NetworkBehaviour
         shooting.shoot(); // First shot
 
         // Wait for the specified delay before the next shot
-        yield return new WaitForSeconds(shootingDelay);
+        yield return new WaitForSeconds(shootingDelay[shooting.currentGun]);
 
         shooting.shoot(); // Second shot, add more shooting logic as needed
 
