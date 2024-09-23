@@ -21,7 +21,8 @@ public class Bullet : NetworkBehaviour
             if (playerHealth != null && playerHealth.OwnerClientId != bulletID)
             {
                 
-                collision.gameObject.GetComponent<TakeDamage>().TakeDamageAction();
+                collision.gameObject.GetComponent<TakeDamage>().TakeDamageAction(this.gameObject.transform.position);
+                //collision.gameObject.GetComponent<TakeDamage>().PlayParticleSystem();
                 isBulletHit = true; 
             }
         }

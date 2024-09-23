@@ -582,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 2032999268551666285}
   body_part_index: 2
+  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}
 --- !u!1 &2988089849060419050
 GameObject:
   m_ObjectHideFlags: 0
@@ -831,6 +832,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 2032999268551666285}
   body_part_index: 2
+  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}
 --- !u!1 &3333990208350281339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1227,6 +1229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 2032999268551666285}
   body_part_index: 2
+  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}
 --- !u!1 &5190397484121615820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1507,6 +1510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 2032999268551666285}
   body_part_index: 0
+  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}
 --- !u!1 &7112185792554129116
 GameObject:
   m_ObjectHideFlags: 0
@@ -2134,6 +2138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 2032999268551666285}
   body_part_index: 2
+  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}
 --- !u!1 &8029856544352804455
 GameObject:
   m_ObjectHideFlags: 0
@@ -2513,3 +2518,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: {fileID: 2032999268551666285}
   body_part_index: 1
+  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}

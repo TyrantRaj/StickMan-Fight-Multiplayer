@@ -100,6 +100,7 @@ public class SceneChanger : NetworkBehaviour
         {
             StartSceneChangerCountDown();
             AssignPlayerInfo();
+            //ResetPlayerHealthOnServer();
             StartCoroutine(ChangeSceneWithDelay("Level2", SceneChangeDelay));
             
         }

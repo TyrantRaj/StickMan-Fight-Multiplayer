@@ -11,9 +11,8 @@ public class SpawnPlayerOnScene : NetworkBehaviour
     {
         if (IsServer)
         {
-            // Handle scene loaded event
             SceneManager.sceneLoaded += OnSceneLoaded;
-            SpawnPlayerForScene(); // Spawn when the game starts
+            SpawnPlayerForSceneServerRpc();
         }
     }
 
@@ -21,7 +20,7 @@ public class SpawnPlayerOnScene : NetworkBehaviour
     {
         if (IsServer)
         {
-            SceneManager.sceneLoaded -= OnSceneLoaded; // Unsubscribe to avoid issues when destroyed
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
     }
 
@@ -29,39 +28,47 @@ public class SpawnPlayerOnScene : NetworkBehaviour
     {
         if (IsServer)
         {
-            SpawnPlayerForScene();
+            SpawnPlayerForSceneServerRpc();
         }
     }
 
-    private void SpawnPlayerForScene()
+    [ServerRpc]
+    private void SpawnPlayerForSceneServerRpc()
     {
-        // Ensure there are spawn points available in the current scene
         if (spawnPoints.Length == 0)
         {
             Debug.LogError("No spawn points assigned for this scene!");
             return;
         }
 
-        // Iterate through all connected clients and set their positions
         foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
         {
             GameObject player = client.PlayerObject.gameObject;
 
             if (player != null)
             {
-              
-
-                // Assign player to a spawn point based on currentSpawnPt index
                 Transform spawnPoint = spawnPoints[currentSpawnPt % spawnPoints.Length];
                 player.transform.position = spawnPoint.position;
                 player.transform.rotation = spawnPoint.rotation;
 
-                // Debugging the player's new position after setting it
-                
+                // Send the updated position and rotation to the client
+                UpdatePlayerPositionClientRpc(spawnPoint.position, spawnPoint.rotation, client.ClientId);
 
-                currentSpawnPt++; // Move to next spawn point for the next player
+                currentSpawnPt++;
             }
-            
+        }
+    }
+
+    // ClientRpc to update the player position on each client
+    [ClientRpc]
+    private void UpdatePlayerPositionClientRpc(Vector3 newPosition, Quaternion newRotation, ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId == clientId)
+        {
+            // Update the player's position and rotation on the client
+            GameObject player = NetworkManager.Singleton.SpawnManager.GetLocalPlayerObject().gameObject;
+            player.transform.position = newPosition;
+            player.transform.rotation = newRotation;
         }
     }
 }

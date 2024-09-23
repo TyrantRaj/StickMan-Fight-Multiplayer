@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletID: 5
   despawnTime: 3
+  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}
 --- !u!58 &-1511217471651605465
 CircleCollider2D:
   m_ObjectHideFlags: 0

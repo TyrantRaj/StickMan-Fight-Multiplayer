@@ -10,7 +10,6 @@ public class Health : NetworkBehaviour
     [SerializeField] IgnoreCollisions ignorecollision;
     [SerializeField] Balance[] balances;
     [SerializeField] Arms arm;
-    canvas player_canvas;
 
     // Ensure that only the server can modify this variable
     private NetworkVariable<int> health = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
@@ -20,7 +19,7 @@ public class Health : NetworkBehaviour
     private void Awake()
     {
         changer = GameObject.FindGameObjectWithTag("SceneManager").GetComponent<SceneChanger>();
-        player_canvas = GameObject.FindFirstObjectByType<canvas>();
+        
     }
 
     private void Start()
@@ -94,8 +93,7 @@ public class Health : NetworkBehaviour
     [ClientRpc]
     private void BringAliveClientRpc()
     {
-        player_canvas.enabled = false;
-        player_canvas.enabled = true;
+        
         if (isdead)
         {
             movement.enabled = true;
