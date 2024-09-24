@@ -17,21 +17,21 @@ public class TakeDamage : NetworkBehaviour
             health.TakeDamageServerRpc(body_part_index);
 
             // Call the Server RPC to play the particle system across clients, passing the bullet's position
-            PlayParticleSystemServerRpc(bulletPosition);
+            PlayParticleSystemServerRpc();
         }
     }
 
     // Server RPC to trigger the particle system on all clients
     [ServerRpc]
-    private void PlayParticleSystemServerRpc(Vector3 bulletPosition)
+    private void PlayParticleSystemServerRpc()
     {
         // Call Client RPC to play the particle effect for all clients, passing the bullet's position
-        PlayParticleSystemClientRpc(bulletPosition);
+        PlayParticleSystemClientRpc();
     }
 
     // Client RPC to play the particle system on each client and rotate it towards the bullet hit direction
     [ClientRpc]
-    private void PlayParticleSystemClientRpc(Vector3 bulletPosition)
+    private void PlayParticleSystemClientRpc()
     {
         // Instantiate and play the blood particle effect locally on each client
         if (bloodParticlePrefab != null)
@@ -39,14 +39,12 @@ public class TakeDamage : NetworkBehaviour
             // Get the position where the particle should spawn (e.g., current object position)
             Vector3 spawnPosition = transform.position;
 
-            // Calculate the direction from the hit point (player) to the bullet's position
-            Vector3 direction = spawnPosition - bulletPosition;
-
-            // Calculate the rotation to make the particles face the bullet direction
-            Quaternion rotation = Quaternion.LookRotation(Vector3.right, direction);
+            // Calculate the rotation from right to the object's right direction
+            Quaternion rotation = Quaternion.FromToRotation(Vector2.right, transform.right);
 
             // Instantiate the blood particle system at the hit point with the calculated rotation
             Instantiate(bloodParticlePrefab, spawnPosition, rotation);
         }
     }
+
 }
