@@ -9,6 +9,7 @@ TagManager:
   - bodypart
   - SceneManager
   - Gun
+  - Box
   layers:
   - Default
   - TransparentFX

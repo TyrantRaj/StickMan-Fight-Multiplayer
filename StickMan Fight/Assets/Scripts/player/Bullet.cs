@@ -6,7 +6,7 @@ public class Bullet : NetworkBehaviour
 {
     bool isBulletHit = false;
     public ulong bulletID = 5; 
-    [SerializeField] private float despawnTime = 5f; 
+    [SerializeField] private float despawnTime = 5f;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,15 +20,27 @@ public class Bullet : NetworkBehaviour
             var playerHealth = collision.gameObject.GetComponentInParent<Health>();
             if (playerHealth != null && playerHealth.OwnerClientId != bulletID)
             {
-                
+
                 collision.gameObject.GetComponent<TakeDamage>().TakeDamageAction(this.gameObject.transform.position);
                 //collision.gameObject.GetComponent<TakeDamage>().PlayParticleSystem();
-                isBulletHit = true; 
+                isBulletHit = true;
+            }
+        }
+        else if (collision.gameObject.CompareTag("Box"))
+        {
+            Debug.Log("Box Hit");
+            var networkObject = collision.gameObject.GetComponent<NetworkObject>();
+
+            if (networkObject != null)
+            {
+                NetworkObjectReference networkObjectRef = new NetworkObjectReference(networkObject);
+                
             }
         }
     }
 
-    private void Start()
+
+        private void Start()
     {
         // Start the coroutine to despawn after a delay
         StartCoroutine(DespawnAfterTime(despawnTime));

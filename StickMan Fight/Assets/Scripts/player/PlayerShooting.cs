@@ -32,7 +32,7 @@ public class PlayerShooting : NetworkBehaviour
         {
             if (hasGun)
             {
-                Debug.Log("Shooting with gun: " + currentGun);
+               
 
                 // Apply recoil rotation to the arm/gun
                 ApplyRecoil();
@@ -65,7 +65,6 @@ public class PlayerShooting : NetworkBehaviour
     [ServerRpc]
     public void ShootServerRpc(Vector3 position, Vector3 direction)
     {
-        Debug.Log("Server spawning bullet");
 
         // Instantiate the bullet
         GameObject bullet = Instantiate(bulletPrefab, position, Quaternion.identity);
