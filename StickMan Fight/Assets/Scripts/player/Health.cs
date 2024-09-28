@@ -71,6 +71,13 @@ public class Health : NetworkBehaviour
         }
     }
 
+    [ServerRpc]
+    public void InstantKillServerRpc()
+    {
+        health.Value = 0;
+    }
+
+
     private void dead()
     {
         if (IsOwner)

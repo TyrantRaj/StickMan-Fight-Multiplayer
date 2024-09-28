@@ -12,7 +12,6 @@ public class Bullet : NetworkBehaviour
     {
         if (isBulletHit) return; // If the bullet has already hit something, exit
 
-        // Check if the collision is with a body part
         if (collision.gameObject.CompareTag("bodypart") ||
             collision.gameObject.CompareTag("LeftArm") ||
             collision.gameObject.CompareTag("RightArm"))
@@ -20,41 +19,59 @@ public class Bullet : NetworkBehaviour
             var playerHealth = collision.gameObject.GetComponentInParent<Health>();
             if (playerHealth != null && playerHealth.OwnerClientId != bulletID)
             {
-
                 collision.gameObject.GetComponent<TakeDamage>().TakeDamageAction(this.gameObject.transform.position);
-                //collision.gameObject.GetComponent<TakeDamage>().PlayParticleSystem();
                 isBulletHit = true;
             }
         }
         else if (collision.gameObject.CompareTag("Box"))
         {
-            Debug.Log("Box Hit");
             var networkObject = collision.gameObject.GetComponent<NetworkObject>();
-
-            if (networkObject != null)
+            isBulletHit = true;
+            if (networkObject != null && IsServer)
             {
-                NetworkObjectReference networkObjectRef = new NetworkObjectReference(networkObject);
+                int health = networkObject.gameObject.GetComponent<Box>().boxHealth;
+                
+                if (health < 0)
+                {
+                    
+                    DestroyBoxServerRpc(networkObject.NetworkObjectId);
+                }
+                else
+                {
+                    networkObject.gameObject.GetComponent<Box>().boxHealth -= 10;
+                    networkObject.gameObject.GetComponent<Box>().PlayPS();
+                    
+                }
                 
             }
         }
     }
 
-
-        private void Start()
+    [ServerRpc(RequireOwnership = false)]
+    private void DestroyBoxServerRpc(ulong networkObjectId)
     {
-        // Start the coroutine to despawn after a delay
+        NetworkManager.SpawnManager.SpawnedObjects.TryGetValue(networkObjectId, out NetworkObject networkObject);
+
+        if (networkObject != null)
+        {
+            
+            Destroy(networkObject.gameObject);
+        }
+    }
+
+
+
+    private void Start()
+    {
         StartCoroutine(DespawnAfterTime(despawnTime));
     }
 
     private IEnumerator DespawnAfterTime(float time)
     {
-        // Wait for the specified amount of time
         yield return new WaitForSeconds(time);
 
-        // Check if the object is spawned on the server before despawning
         if (IsServer)
         {
-            // Despawn the object
             NetworkObject.Despawn();
         }
     }
