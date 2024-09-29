@@ -1692,8 +1692,8 @@ MonoBehaviour:
   rightLeg: {fileID: 2988089849060419050}
   RB: {fileID: 2497675632075090137}
   anim: {fileID: 5578612231805145296}
-  speed: 1.5
-  stepwait: 0.5
+  speed: 0.5
+  stepwait: 0.2
   jumpForce: 1100
   positionRadius: 0.2
   ground:
@@ -1742,7 +1742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 951099334
+  GlobalObjectIdHash: 373041271
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0

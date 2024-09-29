@@ -19,10 +19,10 @@ public class PlayerShooting : NetworkBehaviour
     // Ensure input only triggers once per button press
     void Update()
     {
-        if (IsOwner && Input.GetButtonDown("Fire1"))
+        /*if (IsOwner && Input.GetButtonDown("Fire1"))
         {
             shoot();
-        }
+        }*/
     }
 
     public void shoot()
