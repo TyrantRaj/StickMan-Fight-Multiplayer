@@ -8,6 +8,7 @@ using TMPro;
 
 public class SceneChanger : NetworkBehaviour
 {
+    private SpawnObjects spawnobjects;
     private float remainingTime;
     private bool isCountingDown = false; // Flag to avoid starting the countdown multiple times
     [SerializeField] private TMP_Text SceneChangeText;
@@ -24,6 +25,7 @@ public class SceneChanger : NetworkBehaviour
     {
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded; // Register scene load callback
+        spawnobjects = GetComponent<SpawnObjects>();
     }
 
     private void OnDestroy()
@@ -40,6 +42,7 @@ public class SceneChanger : NetworkBehaviour
             {
                 StartGame();
             });
+            spawnobjects.NewSceneLoaded();
         }
     }
 
@@ -110,7 +113,9 @@ public class SceneChanger : NetworkBehaviour
     {
         if (IsServer)
         {
-            ResetPlayerHealthOnServer(); 
+            ResetPlayerHealthOnServer();
+            spawnobjects.NewSceneLoaded();
+            spawnobjects.DestroyAllGuns();
         }
     }
 

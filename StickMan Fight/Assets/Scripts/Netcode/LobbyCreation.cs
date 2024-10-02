@@ -174,7 +174,7 @@ public class LobbyCreation : MonoBehaviour
             });*/
 
             showLog();
-            Debug.Log("Host Started");
+            
             NetworkManager.Singleton.StartHost();
 
         }

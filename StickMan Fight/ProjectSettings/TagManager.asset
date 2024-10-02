@@ -10,6 +10,8 @@ TagManager:
   - SceneManager
   - Gun
   - Box
+  - GunSpwanPT
+  - Ground
   layers:
   - Default
   - TransparentFX

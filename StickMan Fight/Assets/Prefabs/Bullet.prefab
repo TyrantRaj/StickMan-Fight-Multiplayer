@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: c8061c4d4d9451742b99153a4356835b, type: 3}
-  m_Color: {r: 0.78039217, g: 0.14509805, b: 0.24313726, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.1543212, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -240,8 +240,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.6320754, g: 0.21168566, b: 0.2765607, a: 1}
-      key1: {r: 0.63529414, g: 0.21176471, b: 0.2784314, a: 1}
+      key0: {r: 1, g: 0.5254902, b: 0, a: 1}
+      key1: {r: 1, g: 0.5254902, b: 0, a: 0.39215687}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -257,7 +257,7 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 65535
+      atime1: 47031
       atime2: 0
       atime3: 0
       atime4: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletID: 5
   despawnTime: 3
-  bloodParticlePrefab: {fileID: 8362094047805991134, guid: dac70ab39a6928a41afad7b9b04e3733, type: 3}
+  BulletExplodeParticlePrefab: {fileID: 4255779971858431273, guid: e32e0c4f79aa3a44c818eb4ebaa15738, type: 3}
 --- !u!58 &-1511217471651605465
 CircleCollider2D:
   m_ObjectHideFlags: 0

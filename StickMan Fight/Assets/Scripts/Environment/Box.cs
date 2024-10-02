@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Box : MonoBehaviour
+public class Box : NetworkBehaviour
 {
     public int boxHealth = 100;
     [SerializeField] private GameObject BoxPS;

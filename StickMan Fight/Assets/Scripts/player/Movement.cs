@@ -19,7 +19,9 @@ public class Movement : NetworkBehaviour
 
     public Animator anim;
 
-    [SerializeField] float speed = 1.5f;
+    float speed = 1.5f;
+    [SerializeField] float OnairSpeed = 1.0f;
+    [SerializeField] float OngroundSpeed = 1.0f;
     [SerializeField] float stepwait = 0.5f;
     [SerializeField] float jumpForce = 10;
     private bool isOnGround;
@@ -74,6 +76,16 @@ public class Movement : NetworkBehaviour
         if (IsOwner)
         {
             walkMovement();
+
+            isOnGround = Physics2D.OverlapCircle(playerPosition.position, positionRadius, ground);
+
+            if (!isOnGround) {
+                speed = OnairSpeed;
+            }
+            else
+            {
+                speed = OngroundSpeed;
+            }
         }
 
         
@@ -118,7 +130,7 @@ public class Movement : NetworkBehaviour
     {
         if (IsOwner)
         {
-            isOnGround = Physics2D.OverlapCircle(playerPosition.position, positionRadius, ground);
+            
             if (isOnGround == true)
             {
                 RB.AddForce(Vector2.up * jumpForce);
