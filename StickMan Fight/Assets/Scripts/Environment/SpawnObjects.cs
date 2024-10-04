@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class SpawnObjects : NetworkBehaviour
 {
     [SerializeField] GameObject[] Guns;
+    int currentGunsInScene = 0;
     string Current_scene_name;
     float Spawn_count = 5;
     Transform[] gun_spwan_pts;
@@ -20,7 +21,7 @@ public class SpawnObjects : NetworkBehaviour
     private void GunSpwanPts()
     {
         GameObject[] gunSpawnObjects = GameObject.FindGameObjectsWithTag("GunSpwanPT");
-        Debug.Log(gunSpawnObjects.Length);
+        
         gun_spwan_pts = new Transform[gunSpawnObjects.Length];
 
         for (int i = 0; i < gunSpawnObjects.Length; i++)
@@ -31,7 +32,7 @@ public class SpawnObjects : NetworkBehaviour
 
     private void Update()
     {
-        if (!IsServer) return;
+        if (!IsServer || currentGunsInScene >= 5) return;
 
         Spawn_count -= Time.deltaTime;
 
@@ -56,6 +57,7 @@ public class SpawnObjects : NetworkBehaviour
             if (networkObject != null)
             {
                 networkObject.Spawn(); // Spawn it across all clients
+                currentGunsInScene += 1;
             }
             else
             {
@@ -69,14 +71,17 @@ public class SpawnObjects : NetworkBehaviour
     {
         // Find all guns in the scene
         GameObject[] gunsInScene = GameObject.FindGameObjectsWithTag("Gun");
-
+        currentGunsInScene = 0;
         // Loop through all found guns and despawn them
         foreach (GameObject gun in gunsInScene)
         {
             NetworkObject networkObject = gun.GetComponent<NetworkObject>();
             if (networkObject != null)
             {
-                networkObject.Despawn(); // Despawn the object across the network
+                if (networkObject.IsSpawned)
+                {
+                    networkObject.Despawn(); // Despawn the object across the network
+                }      
             }
             else
             {

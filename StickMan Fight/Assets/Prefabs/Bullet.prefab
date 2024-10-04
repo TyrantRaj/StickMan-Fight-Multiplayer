@@ -293,6 +293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletID: 5
+  rb: {fileID: 9127469948213821073}
+  tr: {fileID: 7691993996664883658}
   despawnTime: 3
   BulletExplodeParticlePrefab: {fileID: 4255779971858431273, guid: e32e0c4f79aa3a44c818eb4ebaa15738, type: 3}
 --- !u!58 &-1511217471651605465

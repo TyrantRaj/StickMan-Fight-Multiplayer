@@ -7,7 +7,6 @@ public class Border : NetworkBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Hit");
         if (collision.gameObject.CompareTag("bodypart") ||
             collision.gameObject.CompareTag("LeftArm") ||
             collision.gameObject.CompareTag("RightArm"))

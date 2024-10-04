@@ -16,14 +16,6 @@ public class PlayerShooting : NetworkBehaviour
     [SerializeField] private Rigidbody2D rb;
     public Transform arm; // The player's arm or gun Transform
 
-    // Ensure input only triggers once per button press
-    void Update()
-    {
-        /*if (IsOwner && Input.GetButtonDown("Fire1"))
-        {
-            shoot();
-        }*/
-    }
 
     public void shoot()
     {

@@ -16,7 +16,7 @@ public class SpawnPlayerOnScene : NetworkBehaviour
         }
     }
 
-    private void OnDestroy()
+    private new void OnDestroy()
     {
         if (IsServer)
         {

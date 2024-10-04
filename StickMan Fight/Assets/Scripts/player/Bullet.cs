@@ -6,8 +6,14 @@ public class Bullet : NetworkBehaviour
 {
     bool isBulletHit = false;
     public ulong bulletID = 5;
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float despawnTime = 5f;
     [SerializeField] private GameObject BulletExplodeParticlePrefab;
+
+    private void Start()
+    {
+        StartCoroutine(DespawnAfterTime(despawnTime));
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -23,6 +29,10 @@ public class Bullet : NetworkBehaviour
             {
                 collision.gameObject.GetComponent<TakeDamage>().TakeDamageAction(this.gameObject.transform.position);
                 isBulletHit = true;
+
+                // Play particle effect immediately for all clients
+                PlayParticleSystemClientRpc(transform.position);
+                //DestroyBullet();
             }
         }
         // Handle bullet hitting a box
@@ -34,7 +44,7 @@ public class Bullet : NetworkBehaviour
             {
                 int health = networkObject.gameObject.GetComponent<Box>().boxHealth;
 
-                if (health < 0)
+                if (health <= 0)
                 {
                     DestroyBoxServerRpc(networkObject.NetworkObjectId);
                 }
@@ -45,16 +55,13 @@ public class Bullet : NetworkBehaviour
                 }
             }
         }
-        // Handle bullet hitting the ground or any other object
         else if (collision.gameObject.CompareTag("Ground"))
         {
             
-            if (IsServer)
-            {
-                PlayParticleSystemServerRpc(); // Pass the hit direction to the particle system
-                NetworkObject.Despawn();
-                // Delay despawning until after the particle system has finished playing
-            }
+                PlayParticleSystemClientRpc(transform.position);
+                rb.velocity = Vector3.zero;
+                isBulletHit = true;
+            
         }
     }
 
@@ -69,52 +76,38 @@ public class Bullet : NetworkBehaviour
         }
     }
 
-    private void Start()
+    private void DestroyBullet()
     {
-        StartCoroutine(DespawnAfterTime(despawnTime));
+        if (IsServer)
+        {
+            NetworkObject.Despawn();
+        }
+        else
+        {
+            // Call server RPC to confirm destruction on the server
+            DestroyBulletServerRpc();
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void DestroyBulletServerRpc()
+    {
+        NetworkObject.Despawn();
     }
 
     private IEnumerator DespawnAfterTime(float time)
     {
         yield return new WaitForSeconds(time);
-
-        if (IsServer)
-        {
-            StartCoroutine(DelayedDespawn());
-        }
-    }
-
-    private IEnumerator DelayedDespawn(float delay = 0f)
-    {
-        yield return new WaitForSeconds(delay); // Wait before despawning (for particle system to finish)
-        if (NetworkObject.IsSpawned) // Ensure the NetworkObject is still spawned before despawning
-        {
-            NetworkObject.Despawn();
-        }
-    }
-
-    [ServerRpc]
-    private void PlayParticleSystemServerRpc()
-    {
-        if (NetworkObject.IsSpawned) // Ensure the NetworkObject is spawned before calling the RPC
-        {
-            PlayParticleSystemClientRpc();
-        }
+        DestroyBullet();
     }
 
     [ClientRpc]
-    private void PlayParticleSystemClientRpc()
+    private void PlayParticleSystemClientRpc(Vector3 position)
     {
         if (BulletExplodeParticlePrefab != null)
         {
-
-            Vector3 spawnPosition = transform.position;
-
-
-            Quaternion rotation = Quaternion.FromToRotation(Vector2.right, transform.right);
-
-
-            Instantiate(BulletExplodeParticlePrefab, spawnPosition, rotation);
+            // Instantiate the particle effect on all clients
+            Instantiate(BulletExplodeParticlePrefab, position, Quaternion.identity);
         }
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4980135169248701412}
   m_Layer: 3
   m_Name: Platform_red_2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

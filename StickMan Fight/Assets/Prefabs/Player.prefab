@@ -1816,6 +1816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db3f0a9cac168b9499656bc44a777394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isdead: 0
   movement: {fileID: 4881371855685754233}
   ignorecollision: {fileID: 283843374883704031}
   balances:
@@ -1823,6 +1824,13 @@ MonoBehaviour:
   - {fileID: 6659377884307201985}
   - {fileID: 6658859190482080512}
   - {fileID: 2844094539684726934}
+  rigidbodies:
+  - {fileID: 7333071330677997005}
+  - {fileID: 2497675632075090137}
+  - {fileID: 3529414844155897504}
+  - {fileID: 2015589299978953528}
+  - {fileID: 1682802815022975414}
+  - {fileID: 3701484635440453744}
   arm: {fileID: 3031978798296804031}
   healthtext: {fileID: 3000716452349228048}
 --- !u!114 &3020103153462358188

@@ -12,6 +12,7 @@ TagManager:
   - Box
   - GunSpwanPT
   - Ground
+  - Lobbycode
   layers:
   - Default
   - TransparentFX

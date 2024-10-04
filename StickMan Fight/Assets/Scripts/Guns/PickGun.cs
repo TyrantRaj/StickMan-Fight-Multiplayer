@@ -24,7 +24,7 @@ public class PickGun : NetworkBehaviour
         equippedGunNumber.OnValueChanged += OnGunEquippedChanged;
     }
 
-    private void OnDestroy()
+    private new void OnDestroy()
     {
         // Unsubscribe when the object is destroyed
         equippedGunNumber.OnValueChanged -= OnGunEquippedChanged;

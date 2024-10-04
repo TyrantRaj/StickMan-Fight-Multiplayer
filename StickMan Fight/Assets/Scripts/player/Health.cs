@@ -5,14 +5,15 @@ using UnityEngine;
 public class Health : NetworkBehaviour
 {
     SceneChanger changer;
-    private bool isdead = false;
+    public bool isdead = false;
     [SerializeField] Movement movement;
     [SerializeField] IgnoreCollisions ignorecollision;
     [SerializeField] Balance[] balances;
+    [SerializeField] Rigidbody2D[] rigidbodies;
     [SerializeField] Arms arm;
 
     // Ensure that only the server can modify this variable
-    private NetworkVariable<int> health = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    public NetworkVariable<int> health = new NetworkVariable<int>(100, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     [SerializeField] private TextMeshProUGUI healthtext;
 
@@ -85,12 +86,16 @@ public class Health : NetworkBehaviour
             if (!isdead)
             {
                 reduce_alivecountServerRpc();
+
                 movement.enabled = false;
                 ignorecollision.enabled = false;
                 arm.enabled = false;
                 foreach (Balance balance in balances)
                 {
                     balance.enabled = false;
+                }
+                foreach (Rigidbody2D rb in rigidbodies) { 
+                    rb.velocity = Vector3.zero;
                 }
                 isdead = true;
             }

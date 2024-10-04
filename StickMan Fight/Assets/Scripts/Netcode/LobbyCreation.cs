@@ -19,8 +19,6 @@ using Unity.Networking.Transport.Relay;
 public class LobbyCreation : MonoBehaviour
 {
     private const string KEY_RELAY_JOIN_CODE = "RelayJoinCode";
-
-    [SerializeField] private SceneChanger changer;
     [SerializeField] private Button createLobbyBtn;
     [SerializeField] private Button quickJoinBtn;
     [SerializeField] private TMP_InputField roomname;
@@ -58,6 +56,7 @@ public class LobbyCreation : MonoBehaviour
         });
 
     }
+
 
     private void Update()
     {
