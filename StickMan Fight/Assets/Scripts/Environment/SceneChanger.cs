@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Unity.Services.Lobbies.Models;
 
 public class SceneChanger : NetworkBehaviour
 {
@@ -177,4 +178,7 @@ public class SceneChanger : NetworkBehaviour
     {
         SceneChangeText.enabled = !SceneChangeText.enabled;
     }
+
+    
+   
 }

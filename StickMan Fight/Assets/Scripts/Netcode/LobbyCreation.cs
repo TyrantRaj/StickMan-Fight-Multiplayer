@@ -14,10 +14,12 @@ using Unity.Services.Relay.Models;
 using System.Threading.Tasks;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Collections;
 
 
 public class LobbyCreation : MonoBehaviour
 {
+    [SerializeField] GameObject MenuUI;
     private const string KEY_RELAY_JOIN_CODE = "RelayJoinCode";
     [SerializeField] private Button createLobbyBtn;
     [SerializeField] private Button quickJoinBtn;
@@ -25,10 +27,18 @@ public class LobbyCreation : MonoBehaviour
     [SerializeField] private Button joincodeBtn;
     [SerializeField] private TMP_InputField joincodeInput;
     [SerializeField] private TMP_Text codeText;
+    [SerializeField] private TMP_InputField playerNameInput;
 
+    public string playerName;
     public int Max_Players = 4;
-    private Lobby joinedLobby;
+    public Lobby joinedLobby;
     private float heartbeattimer;
+
+    private void Start()
+    {
+        playerName = "Tyrant" + Random.Range(0, 10); 
+        //Debug.Log(playerName);
+    }
 
     private void Awake()
     {
@@ -36,7 +46,7 @@ public class LobbyCreation : MonoBehaviour
 
         createLobbyBtn.onClick.AddListener(() =>
         {
-            CreateLobby(roomname.text, false);
+            CreateLobby(roomname.text,playerName, false);
 
             hideUI();
         });
@@ -44,19 +54,18 @@ public class LobbyCreation : MonoBehaviour
         quickJoinBtn.onClick.AddListener(() =>
         {
 
-            QuickJoin();
+            QuickJoin(playerNameInput.text);
             hideUI();
         });
 
         joincodeBtn.onClick.AddListener(() =>
         {
 
-            joinwithCode(joincodeInput.text);
+            joinwithCode(joincodeInput.text, playerNameInput.text);
             hideUI();
         });
 
     }
-
 
     private void Update()
     {
@@ -150,14 +159,16 @@ public class LobbyCreation : MonoBehaviour
         
     }
 
-    public async void CreateLobby(string lobbyname, bool isPrivate)
+    public async void CreateLobby(string lobbyname,string playerName, bool isPrivate)
     {
         try
         {
             joinedLobby = await LobbyService.Instance.CreateLobbyAsync("a", Max_Players, new CreateLobbyOptions
             {
                 IsPrivate = isPrivate,
+                Player = GetPlayer()
             });
+        
 
             /*Allocation allocation = await AllocateRelay();
 
@@ -175,27 +186,36 @@ public class LobbyCreation : MonoBehaviour
             showLog();
             
             NetworkManager.Singleton.StartHost();
+            PrintPlayers(joinedLobby);
+            //SetPlayerNameOnServerRpc(playerName, NetworkManager.Singleton.LocalClientId);
 
         }
         catch (LobbyServiceException e)
         {
             Debug.Log(e.ToString());
+            
         }
     }
 
-    public async void QuickJoin()
+    public async void QuickJoin(string playerName)
     {
         try
         {
-            joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync();
+            QuickJoinLobbyOptions options = new QuickJoinLobbyOptions
+            {
+                Player = GetPlayer()
+            };
+            joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync(options);
 
             /*string relayJoinCode =  joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
 
             JoinAllocation joinallocation = await JoinRelay(relayJoinCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));
 */
-            showLog(); 
+            showLog();
+            PrintPlayers(joinedLobby);
             NetworkManager.Singleton.StartClient();
+            //SetPlayerNameOnServerRpc(playerName, NetworkManager.Singleton.LocalClientId);
 
         }
         catch (LobbyServiceException e)
@@ -204,11 +224,14 @@ public class LobbyCreation : MonoBehaviour
         }
     }
 
-    public async void joinwithCode(string code)
+    public async void joinwithCode(string code,string playerName)
     {
         try
         {
-            joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(code);
+            JoinLobbyByCodeOptions options = new JoinLobbyByCodeOptions { 
+                Player = GetPlayer()
+            };
+            joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(code, options);
 
             /*string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
 
@@ -216,6 +239,8 @@ public class LobbyCreation : MonoBehaviour
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));*/
 
             NetworkManager.Singleton.StartClient();
+            PrintPlayers(joinedLobby);
+            //SetPlayerNameOnServerRpc(playerName, NetworkManager.Singleton.LocalClientId);
         }
         catch (LobbyServiceException e)
         {
@@ -226,7 +251,8 @@ public class LobbyCreation : MonoBehaviour
 
     private void hideUI()
     {
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        MenuUI.SetActive(false);
         //changer.ChangeScene("Lobby");
         SceneManager.LoadScene("Lobby");
         //NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
@@ -234,7 +260,28 @@ public class LobbyCreation : MonoBehaviour
 
     private void showLog()
     {
-        Debug.Log("Lobby Created:" + joinedLobby.Name + "\n Lobby Code:" + joinedLobby.LobbyCode.ToString());
+        //Debug.Log("Lobby Created:" + joinedLobby.Name + "\n Lobby Code:" + joinedLobby.LobbyCode.ToString());
         codeText.text = joinedLobby.LobbyCode.ToString();
     }
+
+
+    private Player GetPlayer()
+    {
+        return new Player
+        {
+            Data = new Dictionary<string, PlayerDataObject> {
+                        {"PlayerName",new PlayerDataObject(PlayerDataObject.VisibilityOptions.Member,playerName) }
+                    }
+        };
+    }
+
+    private void PrintPlayers(Lobby lobby)
+    {
+        //Debug.Log("Players in Lobby " + lobby.Name);
+        foreach (Player player in lobby.Players) {
+            //Debug.Log(player.Id+" " + player.Data["PlayerName"].Value);
+        }
+    }
+
+    
 }

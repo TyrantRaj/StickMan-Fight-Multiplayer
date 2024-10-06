@@ -8,7 +8,7 @@ public class PlayerCountTracker : MonoBehaviour
 
         if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
         {
-            Debug.Log("Player Count: " + GetPlayerCount());
+            //Debug.Log("Player Count: " + GetPlayerCount());
         }
     }
 

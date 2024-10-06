@@ -13,6 +13,8 @@ TagManager:
   - GunSpwanPT
   - Ground
   - Lobbycode
+  - NameIpField
+  - Lobby
   layers:
   - Default
   - TransparentFX

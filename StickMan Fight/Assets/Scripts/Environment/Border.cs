@@ -15,7 +15,6 @@ public class Border : NetworkBehaviour
 
             {
                 collision.gameObject.GetComponent<TakeDamage>().InstanttKill();
-                
             }
         }
     }

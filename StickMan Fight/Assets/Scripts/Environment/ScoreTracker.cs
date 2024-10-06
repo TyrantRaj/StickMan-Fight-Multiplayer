@@ -2,32 +2,57 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using TMPro;
+using Unity.Services.Lobbies.Models;
+using UnityEngine.UI;
+using Unity.Services.Authentication;
+using Unity.Collections;
 
 public class ScoreTracker : NetworkBehaviour
 {
+    [SerializeField] private TextMeshProUGUI[] player_names;
+    [SerializeField] private TextMeshProUGUI[] player_scores;
+    [SerializeField] GameObject gameoverUI;
+    [SerializeField] Button pause_btn;
     private int trackplayer = 0;
     private int[] score;
     [SerializeField] private TMP_Text WinnerTxt;
 
     private List<GameObject> playerGameObjects = new List<GameObject>();
+
+    private void Awake()
+    {
+        pause_btn.onClick.AddListener(() =>
+        {
+            if (gameoverUI != null)
+            {
+                if (gameoverUI.activeSelf)
+                {
+                    gameoverUI.SetActive(false);
+                }
+                else
+                {
+                    RequestScoreboardUpdateServerRpc();
+                    gameoverUI.SetActive(true);
+                }
+            }
+        });
+    }
+
     private void Start()
     {
-        score = new int[4];
+        score = new int[4];  // Initialize a default score for 4 players
     }
-    // Call this when you want to initialize the score and get players
+
     public void InitializePlayerScores()
     {
         GetAllPlayerGameObjects();
-
-        // Initialize score array based on the number of players
-        score = new int[playerGameObjects.Count];
+        score = new int[playerGameObjects.Count];  // Adjust the score array to match player count
     }
 
     public void GetAllPlayerGameObjects()
     {
         if (NetworkManager.Singleton != null && IsServer)
         {
-            // Clear the list before adding players
             playerGameObjects.Clear();
 
             foreach (var client in NetworkManager.Singleton.ConnectedClients)
@@ -44,7 +69,6 @@ public class ScoreTracker : NetworkBehaviour
 
     public void CheckAlivePlayers()
     {
-        // Ensure that the score array and player list have been initialized
         if (score == null || playerGameObjects == null)
         {
             Debug.LogError("Player scores or game objects not initialized.");
@@ -55,43 +79,84 @@ public class ScoreTracker : NetworkBehaviour
 
         foreach (GameObject player in playerGameObjects)
         {
-            if (trackplayer < score.Length) // Check to prevent out-of-bounds error
+            if (trackplayer < score.Length)
             {
                 if (player.GetComponent<Health>().health.Value > 0)
                 {
                     score[trackplayer] += 1;
-                    Debug.Log("alive player is " + trackplayer.ToString());
+                    Debug.Log("Alive player is " + trackplayer.ToString());
                 }
             }
             trackplayer++;
         }
 
-        // Reset trackplayer to 0 after processing
         trackplayer = 0;
+
+        // After updating the scores, sync them with clients
+        UpdatePlayerScoresClientRpc(score);
     }
 
     public void CheckWinner()
     {
-        if (score == null)
-        {
-            //Debug.LogError("Score array is not initialized.");
-            return;
-        }
+        if (score == null) return;
 
         int winnerNo = -1;
-        int currentHighestScore = -1;  // Start with -1 to ensure we capture scores starting at 0
+        int currentHighestScore = -1;
 
         for (int i = 0; i < score.Length; i++)
         {
-            if (score[i] >= currentHighestScore)  // Use >= to handle ties at 0 or higher
+            if (score[i] >= currentHighestScore)
             {
                 currentHighestScore = score[i];
                 winnerNo = i;
             }
         }
-        WinnerTxt.text = winnerNo.ToString();
-        //Debug.Log("Winner is player: " + winnerNo.ToString());
-        
+
+        WinnerTxt.text = "Winner: Player " + (winnerNo + 1).ToString();  // Display winner (assuming 1-based index)
     }
 
+    private void setScoreBoad()
+    {
+        if (!IsServer) return;
+
+        GetAllPlayerGameObjects();
+
+        FixedString128Bytes[] playerNames = new FixedString128Bytes[playerGameObjects.Count];
+
+        for (int i = 0; i < playerGameObjects.Count; i++)
+        {
+            var playerInfo = playerGameObjects[i].GetComponent<playerInfo>();
+            if (playerInfo != null)
+            {
+                playerNames[i] = playerInfo.playerNetworkName.Value;
+            }
+        }
+
+        UpdatePlayerNamesClientRpc(playerNames);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestScoreboardUpdateServerRpc(ServerRpcParams rpcParams = default)
+    {
+        setScoreBoad();
+        //CheckAlivePlayers();  // Update the scores after retrieving player data
+    }
+
+    [ClientRpc]
+    private void UpdatePlayerNamesClientRpc(FixedString128Bytes[] playerNames)
+    {
+        for (int i = 0; i < playerNames.Length; i++)
+        {
+            player_names[i].text = playerNames[i].ToString();
+        }
+    }
+
+    [ClientRpc]
+    private void UpdatePlayerScoresClientRpc(int[] playerScores)
+    {
+        for (int i = 0; i < playerScores.Length; i++)
+        {
+            player_scores[i].text = playerScores[i].ToString();  // Update each player's score on the scoreboard
+        }
+    }
 }

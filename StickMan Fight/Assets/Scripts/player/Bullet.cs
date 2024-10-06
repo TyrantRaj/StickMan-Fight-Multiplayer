@@ -31,7 +31,7 @@ public class Bullet : NetworkBehaviour
                 isBulletHit = true;
 
                 // Play particle effect immediately for all clients
-                PlayParticleSystemClientRpc(transform.position);
+                PlayParticleSystem(transform.position);
                 //DestroyBullet();
             }
         }
@@ -58,8 +58,8 @@ public class Bullet : NetworkBehaviour
         else if (collision.gameObject.CompareTag("Ground"))
         {
             
-                PlayParticleSystemClientRpc(transform.position);
-                rb.velocity = Vector3.zero;
+                PlayParticleSystem(transform.position);
+                //rb.velocity = Vector3.zero;
                 isBulletHit = true;
             
         }
@@ -101,8 +101,8 @@ public class Bullet : NetworkBehaviour
         DestroyBullet();
     }
 
-    [ClientRpc]
-    private void PlayParticleSystemClientRpc(Vector3 position)
+    //[ClientRpc]
+    private void PlayParticleSystem(Vector3 position)
     {
         if (BulletExplodeParticlePrefab != null)
         {
