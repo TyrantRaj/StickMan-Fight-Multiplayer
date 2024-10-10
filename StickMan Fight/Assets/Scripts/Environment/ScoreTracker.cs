@@ -9,13 +9,16 @@ using Unity.Collections;
 
 public class ScoreTracker : NetworkBehaviour
 {
-    [SerializeField] private TextMeshProUGUI[] player_names;
-    [SerializeField] private TextMeshProUGUI[] player_scores;
-    [SerializeField] GameObject gameoverUI;
+    [SerializeField] SceneChanger scenechanger;
+    [SerializeField]  TextMeshProUGUI[] player_names;
+    [SerializeField]  TextMeshProUGUI[] player_scores;
+    [SerializeField] public GameObject gameoverUI;
     [SerializeField] Button pause_btn;
+    [SerializeField] Button Replay_btn;
+    [SerializeField] Button Mainmenu_btn;
     private int trackplayer = 0;
     private int[] score;
-    [SerializeField] private TMP_Text WinnerTxt;
+    [SerializeField]  TMP_Text WinnerTxt;
 
     private List<GameObject> playerGameObjects = new List<GameObject>();
 
@@ -35,6 +38,16 @@ public class ScoreTracker : NetworkBehaviour
                     gameoverUI.SetActive(true);
                 }
             }
+        });
+
+        Replay_btn.onClick.AddListener(() =>
+        {
+            scenechanger.Replay();
+        });
+
+        Mainmenu_btn.onClick.AddListener(() =>
+        {
+            scenechanger.Mainmenu();
         });
     }
 
@@ -159,4 +172,14 @@ public class ScoreTracker : NetworkBehaviour
             player_scores[i].text = playerScores[i].ToString();  // Update each player's score on the scoreboard
         }
     }
+
+    [ClientRpc]
+    public void GameOverSceneClientRpc()
+    {
+        Replay_btn.gameObject.SetActive(true);
+        Mainmenu_btn.gameObject.SetActive(true);
+        gameoverUI.SetActive(true);
+    }
+
+    
 }

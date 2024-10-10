@@ -6,9 +6,10 @@ public class Bullet : NetworkBehaviour
 {
     bool isBulletHit = false;
     public ulong bulletID = 5;
-    [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float despawnTime = 5f;
-    [SerializeField] private GameObject BulletExplodeParticlePrefab;
+    [SerializeField] TrailRenderer bulletTrail;
+    [SerializeField]  Rigidbody2D rb;
+    [SerializeField]  float despawnTime = 5f;
+    [SerializeField]  GameObject BulletExplodeParticlePrefab;
 
     private void Start()
     {
@@ -63,6 +64,8 @@ public class Bullet : NetworkBehaviour
                 isBulletHit = true;
             
         }
+
+        bulletTrail.enabled = false;
     }
 
     [ServerRpc(RequireOwnership = false)]

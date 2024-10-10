@@ -11,6 +11,7 @@ public class Border : NetworkBehaviour
             collision.gameObject.CompareTag("LeftArm") ||
             collision.gameObject.CompareTag("RightArm"))
         {
+            Debug.Log("hit!!");
             var playerHealth = collision.gameObject.GetComponentInParent<Health>();
 
             {

@@ -1,15 +1,19 @@
+using System.Collections;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
 public class Health : NetworkBehaviour
 {
+    private bool isInstantKill = false;
     SceneChanger changer;
     public bool isdead = false;
     [SerializeField] Movement movement;
     [SerializeField] IgnoreCollisions ignorecollision;
     [SerializeField] Balance[] balances;
     [SerializeField] Rigidbody2D[] rigidbodies;
+    [SerializeField] CapsuleCollider2D[] capsuleCollider;
+    [SerializeField] CircleCollider2D headColider;
     [SerializeField] Arms arm;
 
     // Ensure that only the server can modify this variable
@@ -35,6 +39,11 @@ public class Health : NetworkBehaviour
             if (health.Value <= 0)
             {
                 healthtext.text = "0";
+                /*foreach (Rigidbody2D rb in rigidbodies)
+                {
+                    rb.velocity = Vector3.zero;
+                }*/
+
                 dead();
             }
             else
@@ -75,6 +84,7 @@ public class Health : NetworkBehaviour
     [ServerRpc]
     public void InstantKillServerRpc()
     {
+        isInstantKill = true;
         health.Value = 0;
     }
 
@@ -86,7 +96,6 @@ public class Health : NetworkBehaviour
             if (!isdead)
             {
                 reduce_alivecountServerRpc();
-
                 movement.enabled = false;
                 ignorecollision.enabled = false;
                 arm.enabled = false;
@@ -94,28 +103,54 @@ public class Health : NetworkBehaviour
                 {
                     balance.enabled = false;
                 }
-                foreach (Rigidbody2D rb in rigidbodies) { 
-                    rb.velocity = Vector3.zero;
+
+                if (isInstantKill)
+                {
+                    foreach (Rigidbody2D rb in rigidbodies)
+                    {
+                        rb.gravityScale = 0;
+                        rb.velocity = Vector2.zero;
+                        rb.angularVelocity = 0f;
+                        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+                    }
+                    Debug.Log("Movement disabled");
                 }
+                
+
                 isdead = true;
             }
         }
     }
 
+
+
     [ClientRpc]
     private void BringAliveClientRpc()
     {
-        
+        StartCoroutine(bringAlivecount());
+    }
+
+    IEnumerator bringAlivecount()
+    {
+        yield return new  WaitForSeconds(3f);
         if (isdead)
         {
             movement.enabled = true;
             ignorecollision.enabled = true;
             arm.enabled = true;
+
             foreach (Balance balance in balances)
             {
                 balance.enabled = true;
             }
+
+            foreach (Rigidbody2D rb in rigidbodies)
+            {
+                rb.gravityScale = 1;
+                rb.constraints = RigidbodyConstraints2D.None;
+            }
             isdead = false;
+            isInstantKill = false;
         }
     }
 

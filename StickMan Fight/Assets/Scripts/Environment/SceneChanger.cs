@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
-using Unity.Services.Lobbies.Models;
 
 public class SceneChanger : NetworkBehaviour
 {
+    public int maxRounds;
+    private int currentRound = 0;
+    public string[] scenesNames;
     [SerializeField] private ScoreTracker scoretracker;
     private SpawnObjects spawnobjects;
     private float remainingTime;
@@ -30,7 +32,7 @@ public class SceneChanger : NetworkBehaviour
         spawnobjects = GetComponent<SpawnObjects>();
     }
 
-    private new void OnDestroy()
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded; // Unregister scene load callback
     }
@@ -54,7 +56,7 @@ public class SceneChanger : NetworkBehaviour
 
         if (playerCount > 0)
         {
-            lobbycode.gameObject.SetActive(false);
+            lobbycode.SetActive(false);
             gameStarted = true;
             scoretracker.InitializePlayerScores();
             AssignPlayerInfo();
@@ -70,10 +72,8 @@ public class SceneChanger : NetworkBehaviour
     private void AssignPlayerInfo()
     {
         currentAlivePlayer = playerCount;
-        //Debug.Log($"Player Count: {playerCount}, Alive Players: {currentAlivePlayer}");
     }
 
-    // Change scene after a delay
     private IEnumerator ChangeSceneWithDelay(string sceneToLoad, float delay)
     {
         yield return new WaitForSeconds(delay); // Wait for the specified delay
@@ -84,7 +84,6 @@ public class SceneChanger : NetworkBehaviour
     {
         if (IsHost)
         {
-            //Debug.Log($"Changing scene to {sceneToLoad}");
             NetworkManager.Singleton.SceneManager.LoadScene(sceneToLoad, LoadSceneMode.Single);
         }
         else
@@ -99,17 +98,21 @@ public class SceneChanger : NetworkBehaviour
         if (!IsServer || !gameStarted) return;
 
         currentAlivePlayer--; // Reduce the count of alive players
-        //Debug.Log($"Alive players reduced to: {currentAlivePlayer}");
 
-        if (currentAlivePlayer <= 1 && gameStarted)
+        if (currentRound == maxRounds)
+        {
+            scoretracker.GameOverSceneClientRpc();
+        }
+        else if (currentAlivePlayer <= 1 && gameStarted)
         {
             scoretracker.CheckAlivePlayers();
             scoretracker.CheckWinner();
             StartSceneChangerCountDown();
             AssignPlayerInfo();
-            StartCoroutine(ChangeSceneWithDelay("Level2", SceneChangeDelay));
+            StartCoroutine(ChangeSceneWithDelay(GetRandomScene(), SceneChangeDelay));
         }
     }
+
     private void Start()
     {
         lobbycode = GameObject.FindGameObjectWithTag("Lobbycode");
@@ -122,6 +125,11 @@ public class SceneChanger : NetworkBehaviour
             ResetPlayerHealthOnServer();
             spawnobjects.NewSceneLoaded();
             spawnobjects.DestroyAllGuns();
+
+            if (!isCountingDown)
+            {
+                StartSceneChangerCountDown(); // Start countdown after new scene
+            }
         }
     }
 
@@ -145,28 +153,47 @@ public class SceneChanger : NetworkBehaviour
 
     private IEnumerator UpdateCountdown()
     {
+        SetAllPlayerMovementClientRpc(false);  // Disable player movement during countdown
+
         UpdateSceneChangerTextClientRpc();
         while (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;
 
-            // Update the countdown for the host or server
-            SceneChangeText.text = Mathf.Ceil(remainingTime).ToString();  // Show whole seconds
+            // Update countdown on the host/server
+            SceneChangeText.text = Mathf.Ceil(remainingTime).ToString();
 
-            // Sync this countdown to clients
+            // Sync countdown with clients
             UpdateCountdownClientRpc(Mathf.Ceil(remainingTime));
 
-            // Wait for the next frame
-            yield return null;
+            yield return null;  // Wait for the next frame
         }
 
         // When countdown reaches zero
         SceneChangeText.text = "Starting...";
         UpdateSceneChangerTextClientRpc();
+
+        SetAllPlayerMovementClientRpc(true);  // Re-enable player movement
+
         isCountingDown = false; // Reset the countdown flag
     }
 
-    // Sync the countdown with clients
+    [ClientRpc]
+    private void SetAllPlayerMovementClientRpc(bool enable)
+    {
+        // Find all Movement scripts in the scene and toggle their movement
+        Movement[] players = FindObjectsOfType<Movement>();
+
+        foreach (Movement player in players)
+        {
+            if (player.IsOwner)
+            {
+                player.SetMovement(enable);
+                player.freezePlayer(!enable);
+            }
+        }
+    }
+
     [ClientRpc]
     private void UpdateCountdownClientRpc(float time)
     {
@@ -179,6 +206,49 @@ public class SceneChanger : NetworkBehaviour
         SceneChangeText.enabled = !SceneChangeText.enabled;
     }
 
-    
-   
+    private string GetRandomScene()
+    {
+        currentRound++;
+        return scenesNames[Random.Range(0, scenesNames.Length)];
+    }
+
+    public void Mainmenu()
+    {
+        scoretracker.gameoverUI.SetActive(false);
+
+        if (IsHost)
+        {
+            SceneManager.LoadScene("Menu");
+        }
+        else
+        {
+            SceneManager.LoadScene("Menu");
+        }
+    }
+
+    [ClientRpc]
+    private void NotifyMainMenuClientRpc()
+    {
+        ChangeScene("Menu");
+    }
+
+    public void Replay()
+    {
+        scoretracker.gameoverUI.SetActive(false);  // Hide the game over UI for all players
+
+        if (IsHost)
+        {
+            ChangeScene("Lobby");
+        }
+        else
+        {
+            NotifyReplayClientRpc();  // Notify non-host clients about the replay
+        }
+    }
+
+    [ClientRpc]
+    private void NotifyReplayClientRpc()
+    {
+        ChangeScene("Lobby");
+    }
 }

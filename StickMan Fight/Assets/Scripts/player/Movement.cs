@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,8 +10,8 @@ public class Movement : NetworkBehaviour
 {
     private PlayerInput input;
     private Vector2 moveVector = Vector2.zero;
-    
-
+    private bool canMove = true;
+    [SerializeField] Rigidbody2D[] rigidbodies;
     public GameObject leftLeg;
     public GameObject rightLeg;
     Rigidbody2D leftLegRB;
@@ -32,39 +33,32 @@ public class Movement : NetworkBehaviour
     private void Awake()
     {
         input = new PlayerInput();
-        
     }
 
     private void OnEnable()
     {
-       
         input.Enable();
         input.PlayerMovement.WalkMovement.performed += OnMovementPerformed;
-        input.PlayerMovement.WalkMovement.canceled += OnMovementCancled;
-        
-
+        input.PlayerMovement.WalkMovement.canceled += OnMovementCanceled;
     }
 
     private void OnDisable()
     {
-        
         input.Disable();
         input.PlayerMovement.WalkMovement.performed -= OnMovementPerformed;
-        input.PlayerMovement.WalkMovement.canceled -= OnMovementCancled;
-        
-
+        input.PlayerMovement.WalkMovement.canceled -= OnMovementCanceled;
     }
 
     private void OnMovementPerformed(InputAction.CallbackContext value)
     {
         moveVector = value.ReadValue<Vector2>();
     }
-    private void OnMovementCancled(InputAction.CallbackContext value)
+
+    private void OnMovementCanceled(InputAction.CallbackContext value)
     {
         moveVector = Vector2.zero;
     }
 
-    
     void Start()
     {
         leftLegRB = leftLeg.GetComponent<Rigidbody2D>();
@@ -73,13 +67,14 @@ public class Movement : NetworkBehaviour
 
     void Update()
     {
-        if (IsOwner)
+        if (IsOwner && canMove)
         {
             walkMovement();
 
             isOnGround = Physics2D.OverlapCircle(playerPosition.position, positionRadius, ground);
 
-            if (!isOnGround) {
+            if (!isOnGround)
+            {
                 speed = OnairSpeed;
             }
             else
@@ -87,8 +82,6 @@ public class Movement : NetworkBehaviour
                 speed = OngroundSpeed;
             }
         }
-
-        
     }
 
     private void walkMovement()
@@ -128,13 +121,39 @@ public class Movement : NetworkBehaviour
 
     private void OnJump()
     {
-        if (IsOwner)
+        if (IsOwner && canMove && isOnGround)
         {
-            
-            if (isOnGround == true)
+            RB.AddForce(Vector2.up * jumpForce);
+        }
+    }
+
+    public void freezePlayer(bool freeze)
+    {
+        if (!IsOwner) return;
+
+        if (freeze)
+        {
+            foreach (Rigidbody2D rb in rigidbodies)
             {
-                RB.AddForce(Vector2.up * jumpForce);
+                rb.gravityScale = 0;
+                rb.velocity = Vector2.zero;
+                rb.angularVelocity = 0f;
+                rb.constraints = RigidbodyConstraints2D.FreezeAll;
             }
         }
+        else
+        {
+            foreach (Rigidbody2D rb in rigidbodies)
+            {
+                rb.gravityScale = 1;
+                rb.constraints = RigidbodyConstraints2D.None;
+            }
+        }
+    }
+
+    public void SetMovement(bool state)
+    {
+        if (!IsOwner) return;
+        canMove = state;
     }
 }

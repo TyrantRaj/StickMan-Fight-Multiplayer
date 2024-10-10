@@ -364,7 +364,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.437}
+  m_AnchoredPosition: {x: 0, y: 0.16}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5937144997832731448
@@ -1750,7 +1750,6 @@ GameObject:
   - component: {fileID: 3020103153462358188}
   - component: {fileID: 9184090262228124030}
   - component: {fileID: 4610843871021939234}
-  - component: {fileID: 4354229399099143184}
   - component: {fileID: -7164488171417046196}
   m_Layer: 0
   m_Name: Player
@@ -1825,6 +1824,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae5cf361ba310ca4f86fbf75146716cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidbodies:
+  - {fileID: 7333071330677997005}
+  - {fileID: 2497675632075090137}
+  - {fileID: 3529414844155897504}
+  - {fileID: 2015589299978953528}
+  - {fileID: 1682802815022975414}
+  - {fileID: 3701484635440453744}
   leftLeg: {fileID: 4529762315953319590}
   rightLeg: {fileID: 2988089849060419050}
   RB: {fileID: 2497675632075090137}
@@ -1968,6 +1974,13 @@ MonoBehaviour:
   - {fileID: 2015589299978953528}
   - {fileID: 1682802815022975414}
   - {fileID: 3701484635440453744}
+  capsuleCollider:
+  - {fileID: 5153027246093412805}
+  - {fileID: 159972009375998823}
+  - {fileID: 3747997136699655954}
+  - {fileID: 8783975894988425694}
+  - {fileID: 8311815168600182307}
+  headColider: {fileID: 3540580296221720271}
   arm: {fileID: 3031978798296804031}
   health:
     m_InternalValue: 100
@@ -2036,19 +2049,6 @@ HingeJoint2D:
   m_AngleLimits:
     m_LowerAngle: 0
     m_UpperAngle: 359
---- !u!114 &4354229399099143184
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7591649395319588335}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5886e6d0f61e634db44110fd1a27515, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerNameDisplay: {fileID: 4447314605877547476}
 --- !u!114 &-7164488171417046196
 MonoBehaviour:
   m_ObjectHideFlags: 0
