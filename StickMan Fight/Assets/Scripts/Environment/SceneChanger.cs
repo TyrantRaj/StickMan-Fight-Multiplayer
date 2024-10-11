@@ -32,7 +32,7 @@ public class SceneChanger : NetworkBehaviour
         spawnobjects = GetComponent<SpawnObjects>();
     }
 
-    private void OnDestroy()
+    private new void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded; // Unregister scene load callback
     }
@@ -53,14 +53,14 @@ public class SceneChanger : NetworkBehaviour
     private void StartGame()
     {
         playerCount = playercounttracker.GetPlayerCount();
-
+        
         if (playerCount > 0)
         {
             lobbycode.SetActive(false);
             gameStarted = true;
             scoretracker.InitializePlayerScores();
             AssignPlayerInfo();
-            StartSceneChangerCountDown();
+            //StartSceneChangerCountDown();
             StartCoroutine(ChangeSceneWithDelay("Level1", SceneChangeDelay)); // Add delay before starting Level1
         }
         else
@@ -130,6 +130,16 @@ public class SceneChanger : NetworkBehaviour
             {
                 StartSceneChangerCountDown(); // Start countdown after new scene
             }
+
+            if (scene.name == "Lobby")
+            {
+                
+                startGameBtn.gameObject.SetActive(true);
+            }
+            else
+            {
+                startGameBtn.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -145,7 +155,8 @@ public class SceneChanger : NetworkBehaviour
     {
         if (!isCountingDown)
         {
-            remainingTime = SceneChangeDelay;  // Initialize remaining time
+            remainingTime = SceneChangeDelay;
+            // Initialize remaining time
             StartCoroutine(UpdateCountdown());
             isCountingDown = true; // Set flag to prevent multiple countdowns
         }
@@ -216,25 +227,30 @@ public class SceneChanger : NetworkBehaviour
     {
         scoretracker.gameoverUI.SetActive(false);
 
-        if (IsHost)
+       
+            Disconnect();
+        
+       /* else
         {
-            SceneManager.LoadScene("Menu");
-        }
-        else
-        {
-            SceneManager.LoadScene("Menu");
-        }
+            NotifyMainMenuClientRpc();
+        }*/
     }
 
     [ClientRpc]
     private void NotifyMainMenuClientRpc()
     {
-        ChangeScene("Menu");
+        Disconnect();
+    }
+
+    public void Disconnect()
+    {
+        NetworkManager.Singleton.Shutdown();
+        SceneManager.LoadScene("Menu");
     }
 
     public void Replay()
     {
-        scoretracker.gameoverUI.SetActive(false);  // Hide the game over UI for all players
+        scoretracker.gameoverUI.SetActive(false);  
 
         if (IsHost)
         {

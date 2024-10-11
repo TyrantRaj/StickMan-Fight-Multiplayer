@@ -40,8 +40,41 @@ public class LobbyCreation : MonoBehaviour
         //Debug.Log(playerName);
     }
 
-    private void Awake()
+    void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        HandleSceneLoad(scene);
+    }
+
+    // Define the actions you want to perform on scene load
+    private void HandleSceneLoad(Scene scene)
+    {
+        if (scene.name == "Menu")
+        {
+            MenuUI.SetActive(true);
+        }
+       /* else if (scene.name == "GameScene")
+        {
+            
+            Debug.Log("Game Scene Loaded");
+        }*/
+        
+    }
+
+
+private void Awake()
+    {
+        
         InitializeUnityAuthentication();
 
         createLobbyBtn.onClick.AddListener(() =>

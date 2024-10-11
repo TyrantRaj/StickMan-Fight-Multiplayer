@@ -113,10 +113,7 @@ public class Health : NetworkBehaviour
                         rb.angularVelocity = 0f;
                         rb.constraints = RigidbodyConstraints2D.FreezeAll;
                     }
-                    Debug.Log("Movement disabled");
                 }
-                
-
                 isdead = true;
             }
         }
@@ -132,7 +129,7 @@ public class Health : NetworkBehaviour
 
     IEnumerator bringAlivecount()
     {
-        yield return new  WaitForSeconds(3f);
+        yield return new  WaitForSeconds(1f);
         if (isdead)
         {
             movement.enabled = true;
