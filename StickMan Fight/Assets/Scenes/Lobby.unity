@@ -2282,6 +2282,7 @@ MonoBehaviour:
   playerCount: 0
   SceneChangeDelay: 3
   currentAlivePlayer: 0
+  pause_btn: {fileID: 1799943605}
   startGameBtn: {fileID: 162686054}
 --- !u!4 &1252369675
 Transform:

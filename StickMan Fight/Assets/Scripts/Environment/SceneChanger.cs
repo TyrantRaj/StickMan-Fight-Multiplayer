@@ -23,7 +23,8 @@ public class SceneChanger : NetworkBehaviour
     public int currentAlivePlayer = 0;
     private bool gameStarted = false;
 
-    [SerializeField] private Button startGameBtn;
+    [SerializeField] Button pause_btn;
+    [SerializeField] Button startGameBtn;
 
     private void Awake()
     {
@@ -128,17 +129,26 @@ public class SceneChanger : NetworkBehaviour
 
             if (!isCountingDown)
             {
-                StartSceneChangerCountDown(); // Start countdown after new scene
+                StartSceneChangerCountDown();
             }
 
             if (scene.name == "Lobby")
             {
-                
                 startGameBtn.gameObject.SetActive(true);
+                SceneChangeText.enabled = false;
             }
             else
             {
                 startGameBtn.gameObject.SetActive(false);
+            }
+
+            if(scene.name == "Menu")
+            {
+                pause_btn.gameObject.SetActive(false);
+            }
+            else
+            {
+                pause_btn.gameObject.SetActive(true);
             }
         }
     }
@@ -166,7 +176,8 @@ public class SceneChanger : NetworkBehaviour
     {
         SetAllPlayerMovementClientRpc(false);  // Disable player movement during countdown
 
-        UpdateSceneChangerTextClientRpc();
+        EnableSceneChangerTextClientRpc();
+        
         while (remainingTime > 0)
         {
             remainingTime -= Time.deltaTime;
@@ -182,7 +193,7 @@ public class SceneChanger : NetworkBehaviour
 
         // When countdown reaches zero
         SceneChangeText.text = "Starting...";
-        UpdateSceneChangerTextClientRpc();
+        DisableSceneChangerTextClientRpc() ;
 
         SetAllPlayerMovementClientRpc(true);  // Re-enable player movement
 
@@ -212,9 +223,15 @@ public class SceneChanger : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void UpdateSceneChangerTextClientRpc()
+    private void EnableSceneChangerTextClientRpc()
     {
-        SceneChangeText.enabled = !SceneChangeText.enabled;
+        SceneChangeText.enabled = true;
+    }
+
+    [ClientRpc]
+    private void DisableSceneChangerTextClientRpc()
+    {
+        SceneChangeText.enabled = false;
     }
 
     private string GetRandomScene()
@@ -229,6 +246,7 @@ public class SceneChanger : NetworkBehaviour
 
        
             Disconnect();
+        currentRound = 0;
         
        /* else
         {
