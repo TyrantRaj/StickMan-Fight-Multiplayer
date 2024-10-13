@@ -219,8 +219,8 @@ private void Awake()
             showLog();
             
             NetworkManager.Singleton.StartHost();
-            PrintPlayers(joinedLobby);
-            //SetPlayerNameOnServerRpc(playerName, NetworkManager.Singleton.LocalClientId);
+            
+           
 
         }
         catch (LobbyServiceException e)
@@ -246,9 +246,8 @@ private void Awake()
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));
 */
             showLog();
-            PrintPlayers(joinedLobby);
+           
             NetworkManager.Singleton.StartClient();
-            //SetPlayerNameOnServerRpc(playerName, NetworkManager.Singleton.LocalClientId);
 
         }
         catch (LobbyServiceException e)
@@ -272,8 +271,8 @@ private void Awake()
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));*/
 
             NetworkManager.Singleton.StartClient();
-            PrintPlayers(joinedLobby);
-            //SetPlayerNameOnServerRpc(playerName, NetworkManager.Singleton.LocalClientId);
+            
+            
         }
         catch (LobbyServiceException e)
         {
@@ -307,14 +306,4 @@ private void Awake()
                     }
         };
     }
-
-    private void PrintPlayers(Lobby lobby)
-    {
-        //Debug.Log("Players in Lobby " + lobby.Name);
-        foreach (Player player in lobby.Players) {
-            //Debug.Log(player.Id+" " + player.Data["PlayerName"].Value);
-        }
-    }
-
-    
 }

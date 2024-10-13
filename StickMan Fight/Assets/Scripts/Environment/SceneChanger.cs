@@ -29,13 +29,13 @@ public class SceneChanger : NetworkBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += OnSceneLoaded; // Register scene load callback
+        SceneManager.sceneLoaded += OnSceneLoaded; 
         spawnobjects = GetComponent<SpawnObjects>();
     }
 
     private new void OnDestroy()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded; // Unregister scene load callback
+        SceneManager.sceneLoaded -= OnSceneLoaded; 
     }
 
     public override void OnNetworkSpawn()
@@ -45,6 +45,7 @@ public class SceneChanger : NetworkBehaviour
             startGameBtn.gameObject.SetActive(true);
             startGameBtn.onClick.AddListener(() =>
             {
+                Debug.Log("gamestarting");
                 StartGame();
             });
             spawnobjects.NewSceneLoaded();
@@ -61,8 +62,8 @@ public class SceneChanger : NetworkBehaviour
             gameStarted = true;
             scoretracker.InitializePlayerScores();
             AssignPlayerInfo();
-            //StartSceneChangerCountDown();
-            StartCoroutine(ChangeSceneWithDelay("Level1", SceneChangeDelay)); // Add delay before starting Level1
+            StartSceneChangerCountDown();
+            StartCoroutine(ChangeSceneWithDelay("Level1", SceneChangeDelay)); 
         }
         else
         {
@@ -77,7 +78,7 @@ public class SceneChanger : NetworkBehaviour
 
     private IEnumerator ChangeSceneWithDelay(string sceneToLoad, float delay)
     {
-        yield return new WaitForSeconds(delay); // Wait for the specified delay
+        yield return new WaitForSeconds(delay); 
         ChangeScene(sceneToLoad);
     }
 
@@ -98,7 +99,7 @@ public class SceneChanger : NetworkBehaviour
     {
         if (!IsServer || !gameStarted) return;
 
-        currentAlivePlayer--; // Reduce the count of alive players
+        currentAlivePlayer--; 
 
         if (currentRound == maxRounds)
         {
@@ -245,13 +246,10 @@ public class SceneChanger : NetworkBehaviour
         scoretracker.gameoverUI.SetActive(false);
 
        
-            Disconnect();
+        Disconnect();
         currentRound = 0;
         
-       /* else
-        {
-            NotifyMainMenuClientRpc();
-        }*/
+      
     }
 
     [ClientRpc]
@@ -273,10 +271,11 @@ public class SceneChanger : NetworkBehaviour
         if (IsHost)
         {
             ChangeScene("Lobby");
+            currentRound = 0;
         }
         else
         {
-            NotifyReplayClientRpc();  // Notify non-host clients about the replay
+            NotifyReplayClientRpc();
         }
     }
 

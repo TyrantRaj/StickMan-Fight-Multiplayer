@@ -18,7 +18,7 @@ public class ScoreTracker : NetworkBehaviour
     [SerializeField] Button Mainmenu_btn;
     private int trackplayer = 0;
     private int[] score;
-    [SerializeField]  TMP_Text WinnerTxt;
+    //[SerializeField]  TMP_Text WinnerTxt;
 
     private List<GameObject> playerGameObjects = new List<GameObject>();
 
@@ -125,7 +125,7 @@ public class ScoreTracker : NetworkBehaviour
             }
         }
 
-        WinnerTxt.text = "Winner: Player " + (winnerNo + 1).ToString();  // Display winner (assuming 1-based index)
+       // WinnerTxt.text = "Winner: Player " + (winnerNo + 1).ToString();  // Display winner (assuming 1-based index)
     }
 
     private void setScoreBoad()
