@@ -63,7 +63,8 @@ public class SceneChanger : NetworkBehaviour
             scoretracker.InitializePlayerScores();
             AssignPlayerInfo();
             StartSceneChangerCountDown();
-            StartCoroutine(ChangeSceneWithDelay("Level1", SceneChangeDelay)); 
+            //scenesNames[Random.Range(0, scenesNames.Length)],
+            StartCoroutine(ChangeSceneWithDelay("MovingBox", SceneChangeDelay)); 
         }
         else
         {
@@ -151,8 +152,12 @@ public class SceneChanger : NetworkBehaviour
             {
                 pause_btn.gameObject.SetActive(true);
             }
+
+            
         }
     }
+
+
 
     private void ResetPlayerHealthOnServer()
     {
