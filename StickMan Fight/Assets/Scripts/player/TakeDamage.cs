@@ -28,7 +28,15 @@ public class TakeDamage : NetworkBehaviour
             health.InstantKillServerRpc();
         }
     }
-    
+
+    public void KilledBySpike()
+    {
+        if (IsOwner)
+        {
+            health.KillbySpikeServerRpc();
+        }
+    }
+
     [ServerRpc]
     private void PlayParticleSystemServerRpc()
     {

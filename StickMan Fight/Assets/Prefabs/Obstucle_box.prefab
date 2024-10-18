@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 4365405289515848100}
   - component: {fileID: 4883757684825694118}
   - component: {fileID: 6957524204466730736}
-  m_Layer: 0
+  - component: {fileID: 3774784906171554057}
+  m_Layer: 3
   m_Name: Obstucle_box
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +123,7 @@ MonoBehaviour:
   points:
   - {fileID: 0}
   - {fileID: 0}
+  startDelay: 6
 --- !u!61 &6957524204466730736
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -167,3 +169,33 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.93, y: 5.44}
   m_EdgeRadius: 0
+--- !u!114 &3774784906171554057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8700682346473948459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b32b35f6c98a764680738d738ee24d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 0
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0

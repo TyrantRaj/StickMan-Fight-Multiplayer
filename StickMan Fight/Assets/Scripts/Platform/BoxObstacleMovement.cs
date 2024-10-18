@@ -9,7 +9,7 @@ public class BoxObstacleMovement : NetworkBehaviour
     public Transform[] points;
     private NetworkObject networkComponent;
     private int i;
-
+    [SerializeField] float startDelay = 0f;
     private Vector3 startPosition;
     private NetworkVariable<Vector3> position = new NetworkVariable<Vector3>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
@@ -17,18 +17,22 @@ public class BoxObstacleMovement : NetworkBehaviour
     {
         networkComponent = GetComponent<NetworkObject>();
         startPosition = points[startingPoint].position;
+        position.Value = startPosition; // Initialize position
+        transform.position = position.Value; // Set initial position
         enabled = false;
 
         if (IsServer)
         {
-            position.Value = startPosition;
+            StartCoroutine(DelayMovement());
+        }
+        else if (IsClient) {
             StartCoroutine(DelayMovement());
         }
     }
 
     private IEnumerator DelayMovement()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(startDelay);
         enabled = true;
     }
 
@@ -46,19 +50,17 @@ public class BoxObstacleMovement : NetworkBehaviour
                 }
             }
 
-            // Move towards the next point and update the synced position
+            // Move towards the next point
             Vector3 newPosition = Vector2.MoveTowards(transform.position, points[i].position, speed * Time.deltaTime);
             transform.position = newPosition; // Update the transform position
 
-            // Call the RPC to update clients
-            UpdatePositionClientRpc(newPosition);
+            // Update the synchronized position
+            position.Value = newPosition; // This will automatically sync with clients
         }
-    }
-
-    [ClientRpc]
-    private void UpdatePositionClientRpc(Vector3 newPosition)
-    {
-        // This function will be called on all clients
-        transform.position = newPosition; // Update the transform position
+        else if (IsClient)
+        {
+            // Update the transform position if the position is changed by the server
+            transform.position = position.Value;
+        }
     }
 }

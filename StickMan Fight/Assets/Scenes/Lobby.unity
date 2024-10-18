@@ -2303,12 +2303,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2163db6c41616a347944e8f9e5c90c76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxRounds: 5
+  maxRounds: 4
   scenesNames:
   - RedForest1
   - GreyPlatform1
   - Ice1
   - Rain1
+  - Spike1
+  - MovingBox
+  allscenes: []
   scoretracker: {fileID: 1252369677}
   SceneChangeText: {fileID: 1066485666}
   playercounttracker: {fileID: 1252369672}
@@ -2319,7 +2322,6 @@ MonoBehaviour:
   playerCount: 0
   SceneChangeDelay: 3
   currentAlivePlayer: 0
-  boxPrefab: {fileID: 8700682346473948459, guid: a0f511cd41cd54f41953cf4e5591ec84, type: 3}
   pause_btn: {fileID: 1799943605}
   startGameBtn: {fileID: 162686054}
 --- !u!4 &1252369675
@@ -2517,7 +2519,7 @@ Transform:
   m_GameObject: {fileID: 1258344611}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.2184153, z: 0}
+  m_LocalPosition: {x: 0, y: 5.2141786, z: 0}
   m_LocalScale: {x: 22.572, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4024,7 +4026,7 @@ Transform:
   m_GameObject: {fileID: 2114580847}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.188415, z: 0}
+  m_LocalPosition: {x: 0, y: -5.1841784, z: 0}
   m_LocalScale: {x: 21.631498, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

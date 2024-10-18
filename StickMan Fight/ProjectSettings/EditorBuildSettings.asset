@@ -12,18 +12,21 @@ EditorBuildSettings:
     path: Assets/Scenes/Lobby.unity
     guid: ff13dbfddd77aaa458098c7f4f178234
   - enabled: 1
-    path: Assets/Scenes/RedForest1.unity
+    path: Assets/Scenes/AllLevels/RedForest1.unity
     guid: b039c0154bc82be4ebc427c614263e55
   - enabled: 1
-    path: Assets/Scenes/GreyPlatform1.unity
+    path: Assets/Scenes/AllLevels/GreyPlatform1.unity
     guid: fb017967e26eab646bb1c8a68a260ea3
   - enabled: 1
-    path: Assets/Scenes/Ice1.unity
+    path: Assets/Scenes/AllLevels/Ice1.unity
     guid: 8e11d2bbe933e5d45acac36b7ceca83d
   - enabled: 1
-    path: Assets/Scenes/Rain1.unity
+    path: Assets/Scenes/AllLevels/Rain1.unity
     guid: e19b1f6a72c725f4f9d26c5a79552435
   - enabled: 1
-    path: Assets/Scenes/MovingBox.unity
+    path: Assets/Scenes/AllLevels/MovingBox.unity
     guid: 8d59895d16040ab48b8e2c3b5da09228
+  - enabled: 1
+    path: Assets/Scenes/AllLevels/Spike1.unity
+    guid: b968d1c69707e07408613d27b1f14727
   m_configObjects: {}

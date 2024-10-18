@@ -88,6 +88,11 @@ public class Health : NetworkBehaviour
         health.Value = 0;
     }
 
+    [ServerRpc]
+    public void KillbySpikeServerRpc()
+    {
+        health.Value = 0;
+    }
 
     private void dead()
     {

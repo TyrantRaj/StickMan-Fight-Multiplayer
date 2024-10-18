@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Linq;
 
 public class SceneChanger : NetworkBehaviour
 {
     public int maxRounds;
     private int currentRound = 0;
     public string[] scenesNames;
+    public string[] allscenes;
+    private string[] playedScenes;
     [SerializeField] private ScoreTracker scoretracker;
     private SpawnObjects spawnobjects;
     private float remainingTime;
@@ -42,6 +45,7 @@ public class SceneChanger : NetworkBehaviour
     {
         if (IsHost)
         {
+            allscenes = scenesNames;
             startGameBtn.gameObject.SetActive(true);
             startGameBtn.onClick.AddListener(() =>
             {
@@ -63,8 +67,8 @@ public class SceneChanger : NetworkBehaviour
             scoretracker.InitializePlayerScores();
             AssignPlayerInfo();
             StartSceneChangerCountDown();
-            //scenesNames[Random.Range(0, scenesNames.Length)],
-            StartCoroutine(ChangeSceneWithDelay("MovingBox", SceneChangeDelay)); 
+            
+            StartCoroutine(ChangeSceneWithDelay(scenesNames[Random.Range(0, scenesNames.Length)], SceneChangeDelay)); 
         }
         else
         {
@@ -79,8 +83,17 @@ public class SceneChanger : NetworkBehaviour
 
     private IEnumerator ChangeSceneWithDelay(string sceneToLoad, float delay)
     {
-        yield return new WaitForSeconds(delay); 
+        yield return new WaitForSeconds(delay);
+        RemoveScene(sceneToLoad);
         ChangeScene(sceneToLoad);
+    }
+
+    private void RemoveScene(string sceneToRemove)
+    {
+        scenesNames = scenesNames.Where(scene => scene != sceneToRemove).ToArray();
+        
+        Debug.Log("Remaining Scenes:"+ scenesNames.Length.ToString());
+        
     }
 
     public void ChangeScene(string sceneToLoad)
@@ -136,6 +149,7 @@ public class SceneChanger : NetworkBehaviour
 
             if (scene.name == "Lobby")
             {
+                ResetScene();
                 startGameBtn.gameObject.SetActive(true);
                 SceneChangeText.enabled = false;
             }
@@ -288,5 +302,10 @@ public class SceneChanger : NetworkBehaviour
     private void NotifyReplayClientRpc()
     {
         ChangeScene("Lobby");
+    }
+
+    private void ResetScene()
+    {
+        scenesNames = allscenes;
     }
 }
