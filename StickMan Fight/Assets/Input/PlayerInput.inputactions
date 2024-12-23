@@ -1,5 +1,5 @@
 {
-    "name": "PlayerMovement",
+    "name": "PlayerInput",
     "maps": [
         {
             "name": "PlayerMovement",
@@ -77,6 +77,17 @@
                     "action": "WalkMovement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "aac404ba-c490-4fb6-88ac-c496533f2e8d",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WalkMovement",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 },
                 {
                     "name": "",

@@ -35,7 +35,7 @@ public class Movement : NetworkBehaviour
         input = new PlayerInput();
     }
 
-    private void OnEnable()
+    /*private void OnEnable()
     {
         input.Enable();
         input.PlayerMovement.WalkMovement.performed += OnMovementPerformed;
@@ -54,10 +54,38 @@ public class Movement : NetworkBehaviour
         moveVector = value.ReadValue<Vector2>();
     }
 
+
+    private void OnMovementCanceled(InputAction.CallbackContext value)
+    {
+        moveVector = Vector2.zero;
+    }*/
+
+    private void OnEnable()
+    {
+        input.Enable();
+        input.PlayerMovement.WalkMovement.performed += OnMovementPerformed;
+        input.PlayerMovement.WalkMovement.canceled += OnMovementCanceled;
+    }
+
+    private void OnDisable()
+    {
+        input.Disable();
+        input.PlayerMovement.WalkMovement.performed -= OnMovementPerformed;
+        input.PlayerMovement.WalkMovement.canceled -= OnMovementCanceled;
+    }
+
+    private void OnMovementPerformed(InputAction.CallbackContext value)
+    {
+        Vector2 joystickInput = value.ReadValue<Vector2>();
+        moveVector = new Vector2(joystickInput.x, 0); // Only use the horizontal axis
+    }
+
     private void OnMovementCanceled(InputAction.CallbackContext value)
     {
         moveVector = Vector2.zero;
     }
+
+
 
     void Start()
     {

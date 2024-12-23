@@ -497,8 +497,8 @@ Transform:
   m_GameObject: {fileID: 2393563945143693086}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.299, y: -1.1719999, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.33, y: -1.1719999, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4735142229662363629}
@@ -545,8 +545,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -689294933, guid: 2f986b600d48dba4b82f4e41d1585b89, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 1081017797, guid: 47168630ba246dc46afd7ec9352f6e1f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.84313726}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -589,7 +589,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.09200002, y: 0.6040001}
+  m_Size: {x: 0.09800002, y: 0.5060001}
   m_Direction: 0
 --- !u!50 &2015589299978953528
 Rigidbody2D:
@@ -603,7 +603,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -633,7 +633,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0.3}
+  m_Anchor: {x: 0, y: 0.33}
   m_ConnectedAnchor: {x: -0.0010000765, y: 0.15600002}
   m_UseMotor: 0
   m_Motor:
@@ -752,7 +752,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1.9290001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8695378868792351852}
@@ -799,8 +799,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -871320787, guid: 2f986b600d48dba4b82f4e41d1585b89, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 1081017797, guid: 47168630ba246dc46afd7ec9352f6e1f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.84313726}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -843,7 +843,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.092, y: 0.52}
+  m_Size: {x: 0.098, y: 0.506}
   m_Direction: 0
 --- !u!50 &1682802815022975414
 Rigidbody2D:
@@ -857,7 +857,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -1150,7 +1150,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1.9290001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1786386028319240687}
@@ -1196,8 +1196,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -871320787, guid: 2f986b600d48dba4b82f4e41d1585b89, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 1081017797, guid: 47168630ba246dc46afd7ec9352f6e1f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.84313726}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1240,7 +1240,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.092, y: 0.52}
+  m_Size: {x: 0.098, y: 0.506}
   m_Direction: 0
 --- !u!50 &3701484635440453744
 Rigidbody2D:
@@ -1254,7 +1254,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -1429,8 +1429,8 @@ Transform:
   m_GameObject: {fileID: 6194145756992916145}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.788, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -0.776, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6171192680707441666}
@@ -1477,8 +1477,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1360533544, guid: 2f986b600d48dba4b82f4e41d1585b89, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 2062287261, guid: 47168630ba246dc46afd7ec9352f6e1f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.84313726}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1535,7 +1535,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -1565,7 +1565,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: -0.19}
+  m_Anchor: {x: 0, y: -0.2}
   m_ConnectedAnchor: {x: 0, y: 0.35000002}
   m_UseMotor: 0
   m_Motor:
@@ -1836,9 +1836,9 @@ MonoBehaviour:
   RB: {fileID: 2497675632075090137}
   anim: {fileID: 5578612231805145296}
   OnairSpeed: 0.5
-  OngroundSpeed: 0.5
+  OngroundSpeed: 0.8
   stepwait: 0.01
-  jumpForce: 1100
+  jumpForce: 1700
   positionRadius: 0.2
   ground:
     serializedVersion: 2
@@ -2040,7 +2040,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0.788}
+  m_ConnectedAnchor: {x: 0, y: 1.552}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -2232,8 +2232,8 @@ Transform:
   m_GameObject: {fileID: 7827263758139450566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0.299, y: -1.1719999, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.33, y: -1.1719999, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1786386028319240687}
@@ -2279,8 +2279,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -863289605, guid: 2f986b600d48dba4b82f4e41d1585b89, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: -1267484741, guid: 47168630ba246dc46afd7ec9352f6e1f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.84313726}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2323,7 +2323,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.09200002, y: 0.6040001}
+  m_Size: {x: 0.09600002, y: 0.5060001}
   m_Direction: 0
 --- !u!50 &3529414844155897504
 Rigidbody2D:
@@ -2337,7 +2337,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -2367,7 +2367,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: -0.3}
+  m_Anchor: {x: 0, y: -0.33}
   m_ConnectedAnchor: {x: 0.0010000765, y: 0.15600002}
   m_UseMotor: 0
   m_Motor:
@@ -2639,7 +2639,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1.3280001, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6644221594464452558}
@@ -2686,8 +2686,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1845646707, guid: 2f986b600d48dba4b82f4e41d1585b89, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 2039254440, guid: 47168630ba246dc46afd7ec9352f6e1f, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.84313726}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2730,7 +2730,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.092, y: 0.748}
+  m_Size: {x: 0.098, y: 0.64}
   m_Direction: 0
 --- !u!50 &2497675632075090137
 Rigidbody2D:
@@ -2744,7 +2744,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.5
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1

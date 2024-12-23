@@ -148,7 +148,7 @@ Transform:
   m_GameObject: {fileID: 167499663}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12, y: -0.64, z: 0}
+  m_LocalPosition: {x: -16.38, y: -0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -264,7 +264,7 @@ Transform:
   m_GameObject: {fileID: 598592905}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.74, y: -0.64, z: 0}
+  m_LocalPosition: {x: 13.77, y: -0.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -625,12 +625,20 @@ PrefabInstance:
       value: Obstucle_box
       objectReference: {fileID: 0}
     - target: {fileID: 8833844735435654861, guid: a0f511cd41cd54f41953cf4e5591ec84, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833844735435654861, guid: a0f511cd41cd54f41953cf4e5591ec84, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8833844735435654861, guid: a0f511cd41cd54f41953cf4e5591ec84, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.37
+      value: -16.24
       objectReference: {fileID: 0}
     - target: {fileID: 8833844735435654861, guid: a0f511cd41cd54f41953cf4e5591ec84, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.6
+      value: -1.15
       objectReference: {fileID: 0}
     - target: {fileID: 8833844735435654861, guid: a0f511cd41cd54f41953cf4e5591ec84, type: 3}
       propertyPath: m_LocalPosition.z
@@ -694,7 +702,7 @@ Transform:
   m_GameObject: {fileID: 2056592163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

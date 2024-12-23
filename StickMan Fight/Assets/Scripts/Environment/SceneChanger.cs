@@ -67,8 +67,11 @@ public class SceneChanger : NetworkBehaviour
             scoretracker.InitializePlayerScores();
             AssignPlayerInfo();
             StartSceneChangerCountDown();
-            
+
             StartCoroutine(ChangeSceneWithDelay(scenesNames[Random.Range(0, scenesNames.Length)], SceneChangeDelay)); 
+
+            //used to chage specific scene
+            //StartCoroutine(ChangeSceneWithDelay("GreyPlatform1", SceneChangeDelay));
         }
         else
         {

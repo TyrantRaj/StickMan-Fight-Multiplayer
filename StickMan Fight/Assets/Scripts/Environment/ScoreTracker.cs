@@ -9,6 +9,7 @@ using Unity.Collections;
 
 public class ScoreTracker : NetworkBehaviour
 {
+    [SerializeField] GameObject[] PlayerScoreGameObjects;
     [SerializeField] SceneChanger scenechanger;
     [SerializeField]  TextMeshProUGUI[] player_names;
     [SerializeField]  TextMeshProUGUI[] player_scores;
@@ -18,7 +19,7 @@ public class ScoreTracker : NetworkBehaviour
     [SerializeField] Button Mainmenu_btn;
     private int trackplayer = 0;
     private int[] score;
-    //[SerializeField]  TMP_Text WinnerTxt;
+    
 
     private List<GameObject> playerGameObjects = new List<GameObject>();
 
@@ -53,13 +54,13 @@ public class ScoreTracker : NetworkBehaviour
 
     private void Start()
     {
-        score = new int[4];  // Initialize a default score for 4 players
+        score = new int[4];  
     }
 
     public void InitializePlayerScores()
     {
         GetAllPlayerGameObjects();
-        score = new int[playerGameObjects.Count];  // Adjust the score array to match player count
+        score = new int[playerGameObjects.Count];  
     }
 
     public void GetAllPlayerGameObjects()
@@ -160,6 +161,7 @@ public class ScoreTracker : NetworkBehaviour
     {
         for (int i = 0; i < playerNames.Length; i++)
         {
+            PlayerScoreGameObjects[i].SetActive(true);
             player_names[i].text = playerNames[i].ToString();
         }
     }
