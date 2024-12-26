@@ -603,7 +603,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.3
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -857,9 +857,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_Mass: 0.5
+  m_LinearDrag: 0.5
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 6dbbff06b4134f14b85f4730d70a2c7e, type: 2}
   m_IncludeLayers:
@@ -910,7 +910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRotation: 0
-  force: 300
+  force: 250
 --- !u!114 &4840078389224757165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1254,9 +1254,9 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
+  m_Mass: 0.5
+  m_LinearDrag: 0.5
+  m_AngularDrag: 1
   m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 6dbbff06b4134f14b85f4730d70a2c7e, type: 2}
   m_IncludeLayers:
@@ -1307,7 +1307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRotation: 0
-  force: 300
+  force: 250
 --- !u!114 &4892737882932546460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1535,7 +1535,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.3
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -1588,7 +1588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRotation: 0
-  force: 10
+  force: 0
 --- !u!114 &4561030014022210857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1835,10 +1835,10 @@ MonoBehaviour:
   rightLeg: {fileID: 2988089849060419050}
   RB: {fileID: 2497675632075090137}
   anim: {fileID: 5578612231805145296}
-  OnairSpeed: 0.5
-  OngroundSpeed: 0.8
-  stepwait: 0.01
-  jumpForce: 1700
+  OnairSpeed: 1
+  OngroundSpeed: 1
+  stepwait: 0.5
+  jumpForce: 700
   positionRadius: 0.2
   ground:
     serializedVersion: 2
@@ -2337,7 +2337,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.3
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 1
@@ -2772,7 +2772,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetRotation: 0
-  force: 300
+  force: 500
 --- !u!114 &90915111888714548
 MonoBehaviour:
   m_ObjectHideFlags: 0

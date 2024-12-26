@@ -93,7 +93,7 @@ public class Movement : NetworkBehaviour
         rightLegRB = rightLeg.GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (IsOwner && canMove)
         {

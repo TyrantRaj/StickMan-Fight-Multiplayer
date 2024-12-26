@@ -19,6 +19,17 @@ using Unity.Collections;
 
 public class LobbyCreation : MonoBehaviour
 {
+    private bool isRoomPrivate = false;
+
+    public Button privateButton;
+    public Button publicButton;
+
+    public Color selectedColor = Color.green;   // Highlight color
+    public Color normalColor = Color.white;
+
+
+    [SerializeField] GameObject CreateRoomPanel;
+    [SerializeField] GameObject JoinRoomPanel;
     [SerializeField] GameObject MenuUI;
     private const string KEY_RELAY_JOIN_CODE = "RelayJoinCode";
     [SerializeField] private Button createLobbyBtn;
@@ -29,6 +40,9 @@ public class LobbyCreation : MonoBehaviour
     [SerializeField] private TMP_Text codeText;
     [SerializeField] private TMP_InputField playerNameInput;
 
+    [SerializeField] private Button CreateRoomBtn;
+    [SerializeField] private Button JoinRoomBtn;
+
     public string playerName;
     public int Max_Players = 4;
     public Lobby joinedLobby;
@@ -36,8 +50,37 @@ public class LobbyCreation : MonoBehaviour
 
     private void Start()
     {
-        playerName = "Tyrant" + Random.Range(0, 10); 
+        playerName = "Tyrant" + Random.Range(0, 10);
         //Debug.Log(playerName);
+
+        privateButton.onClick.AddListener(OnPrivateButtonClicked);
+        publicButton.onClick.AddListener(OnPublicButtonClicked);
+    }
+
+    private void OnPrivateButtonClicked()
+    {
+        Debug.Log("Room set to private");
+        isRoomPrivate = true;
+        ResetButtonColors();
+
+
+        privateButton.image.color = selectedColor;
+    }
+
+    private void OnPublicButtonClicked()
+    {
+        Debug.Log("Room set to public");
+        isRoomPrivate = false;
+        
+        ResetButtonColors();
+
+        publicButton.image.color = selectedColor;
+    }
+
+    private void ResetButtonColors()
+    {
+        privateButton.image.color = normalColor;
+        publicButton.image.color = normalColor;
     }
 
     void OnEnable()
@@ -79,7 +122,12 @@ private void Awake()
 
         createLobbyBtn.onClick.AddListener(() =>
         {
-            CreateLobby(roomname.text,playerName, false);
+            CreateRoomPanel.gameObject.SetActive(true);
+        });
+
+        CreateRoomBtn.onClick.AddListener(() =>
+        {
+            CreateLobby(roomname.text, playerName, isRoomPrivate);
 
             hideUI();
         });
@@ -93,7 +141,12 @@ private void Awake()
 
         joincodeBtn.onClick.AddListener(() =>
         {
+            JoinRoomPanel.gameObject.SetActive(true);
+            
+        });
 
+        JoinRoomBtn.onClick.AddListener(() =>
+        {
             joinwithCode(joincodeInput.text, playerNameInput.text);
             hideUI();
         });
@@ -285,6 +338,8 @@ private void Awake()
     {
         //gameObject.SetActive(false);
         MenuUI.SetActive(false);
+        CreateRoomPanel.SetActive(false);
+        JoinRoomPanel.SetActive(false);
         //changer.ChangeScene("Lobby");
         SceneManager.LoadScene("Lobby");
         //NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
