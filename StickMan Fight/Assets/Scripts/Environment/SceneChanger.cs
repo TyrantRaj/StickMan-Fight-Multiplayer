@@ -234,7 +234,7 @@ public class SceneChanger : NetworkBehaviour
             if (player.IsOwner)
             {
                 player.SetMovement(enable);
-                player.freezePlayer(!enable);
+                //player.freezePlayer(!enable);
             }
         }
     }

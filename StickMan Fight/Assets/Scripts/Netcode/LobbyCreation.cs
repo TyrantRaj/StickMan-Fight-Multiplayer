@@ -254,21 +254,22 @@ private void Awake()
                 IsPrivate = isPrivate,
                 Player = GetPlayer()
             });
-        
 
-            /*Allocation allocation = await AllocateRelay();
+            //multiplayer code start
+            Allocation allocation = await AllocateRelay();
 
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(allocation, "dtls"));
             string relayJoinCode = await GetRelayJoinCode(allocation);
 
-            await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions {
+            await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+            {
                 Data = new Dictionary<string, DataObject>
                 {
                     {KEY_RELAY_JOIN_CODE, new DataObject(DataObject.VisibilityOptions.Member,relayJoinCode)}
 
                 }
-            });*/
-
+            });
+            //multiplayer code end
             showLog();
             
             NetworkManager.Singleton.StartHost();
@@ -293,11 +294,12 @@ private void Awake()
             };
             joinedLobby = await LobbyService.Instance.QuickJoinLobbyAsync(options);
 
-            /*string relayJoinCode =  joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
+            //multiplayer code start
+            string relayJoinCode =  joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
 
             JoinAllocation joinallocation = await JoinRelay(relayJoinCode);
             NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));
-*/
+            //multiplayer code end
             showLog();
            
             NetworkManager.Singleton.StartClient();
@@ -318,11 +320,12 @@ private void Awake()
             };
             joinedLobby = await LobbyService.Instance.JoinLobbyByCodeAsync(code, options);
 
-            /*string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
+            //multiplayer code start
+            string relayJoinCode = joinedLobby.Data[KEY_RELAY_JOIN_CODE].Value;
 
             JoinAllocation joinallocation = await JoinRelay(relayJoinCode);
-            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));*/
-
+            NetworkManager.Singleton.GetComponent<UnityTransport>().SetRelayServerData(new RelayServerData(joinallocation, "dtls"));
+            //multiplayer code end
             NetworkManager.Singleton.StartClient();
             
             

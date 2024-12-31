@@ -8,12 +8,8 @@ public class Health : NetworkBehaviour
     private bool isInstantKill = false;
     SceneChanger changer;
     public bool isdead = false;
-    [SerializeField] Movement movement;
-    [SerializeField] IgnoreCollisions ignorecollision;
-    [SerializeField] Balance[] balances;
+    [SerializeField] squareplayermovement movement;
     [SerializeField] Rigidbody2D[] rigidbodies;
-    [SerializeField] CapsuleCollider2D[] capsuleCollider;
-    [SerializeField] CircleCollider2D headColider;
     [SerializeField] Arms arm;
 
     // Ensure that only the server can modify this variable
@@ -39,10 +35,7 @@ public class Health : NetworkBehaviour
             if (health.Value <= 0)
             {
                 healthtext.text = "0";
-                /*foreach (Rigidbody2D rb in rigidbodies)
-                {
-                    rb.velocity = Vector3.zero;
-                }*/
+
 
                 dead();
             }
@@ -59,26 +52,9 @@ public class Health : NetworkBehaviour
     }
 
     [ServerRpc]
-    public void TakeDamageServerRpc(int body_part)
+    public void TakeDamageServerRpc()
     {
-        switch (body_part)
-        {
-            case 0:
-                health.Value -= Random.Range(5, 25);
-                break;
-            case 1:
-                health.Value -= Random.Range(5, 10);
-                break;
-            case 2:
-                health.Value -= Random.Range(5, 10);
-                break;
-            case 3:
-                health.Value -= Random.Range(5, 15);
-                break;
-            default:
-                health.Value -= Random.Range(5, 20);
-                break;
-        }
+        health.Value -= Random.Range(5, 25);
     }
 
     [ServerRpc]
@@ -102,23 +78,9 @@ public class Health : NetworkBehaviour
             {
                 reduce_alivecountServerRpc();
                 movement.enabled = false;
-                ignorecollision.enabled = false;
+                
                 arm.enabled = false;
-                foreach (Balance balance in balances)
-                {
-                    balance.enabled = false;
-                }
-
-                if (isInstantKill)
-                {
-                    foreach (Rigidbody2D rb in rigidbodies)
-                    {
-                        rb.gravityScale = 0;
-                        rb.velocity = Vector2.zero;
-                        rb.angularVelocity = 0f;
-                        rb.constraints = RigidbodyConstraints2D.FreezeAll;
-                    }
-                }
+            
                 isdead = true;
             }
         }
@@ -138,19 +100,12 @@ public class Health : NetworkBehaviour
         if (isdead)
         {
             movement.enabled = true;
-            ignorecollision.enabled = true;
+            
             arm.enabled = true;
 
-            foreach (Balance balance in balances)
-            {
-                balance.enabled = true;
-            }
+          
 
-            foreach (Rigidbody2D rb in rigidbodies)
-            {
-                rb.gravityScale = 1;
-                rb.constraints = RigidbodyConstraints2D.None;
-            }
+
             isdead = false;
             isInstantKill = false;
         }

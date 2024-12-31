@@ -21,9 +21,7 @@ public class Bullet : NetworkBehaviour
         if (isBulletHit) return; // If the bullet has already hit something, exit
 
         // Handle bullet hitting body parts
-        if (collision.gameObject.CompareTag("bodypart") ||
-            collision.gameObject.CompareTag("LeftArm") ||
-            collision.gameObject.CompareTag("RightArm"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             var playerHealth = collision.gameObject.GetComponentInParent<Health>();
             if (playerHealth != null && playerHealth.OwnerClientId != bulletID)

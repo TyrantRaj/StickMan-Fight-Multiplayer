@@ -7,9 +7,7 @@ public class Border : NetworkBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("bodypart") ||
-            collision.gameObject.CompareTag("LeftArm") ||
-            collision.gameObject.CompareTag("RightArm"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             
             var playerHealth = collision.gameObject.GetComponentInParent<Health>();

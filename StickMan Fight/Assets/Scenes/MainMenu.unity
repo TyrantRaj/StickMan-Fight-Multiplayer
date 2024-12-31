@@ -296,9 +296,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
-    m_PressedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
-    m_SelectedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_HighlightedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_PressedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_SelectedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -429,9 +429,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
-    m_PressedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
-    m_SelectedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_HighlightedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_PressedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_SelectedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -519,7 +519,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.23921569, g: 0.23137255, b: 0.9529412, a: 0}
+  m_BackGroundColor: {r: 1, g: 0.79607844, b: 0.22745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -685,8 +685,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -819,8 +819,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -999,9 +999,9 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
-    m_PressedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
-    m_SelectedSprite: {fileID: -1198384320, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_HighlightedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_PressedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
+    m_SelectedSprite: {fileID: -1107613795, guid: 5f1eeda7ced9c9c40ba8b0db50e1870b, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -1189,7 +1189,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: STICKMAN FIGHT
+  m_text: Stick Clash Online
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6cb3d594638e78b4ea395324ddfbac39, type: 2}
   m_sharedMaterial: {fileID: -7323379402440357495, guid: 6cb3d594638e78b4ea395324ddfbac39, type: 2}
@@ -1198,8 +1198,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: -1183493901
+  m_TextStyleHashCode: 97690656
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -1334,8 +1334,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

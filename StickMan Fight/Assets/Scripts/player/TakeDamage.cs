@@ -4,7 +4,6 @@ using Unity.Netcode;
 public class TakeDamage : NetworkBehaviour
 {
     [SerializeField] Health health;
-    [SerializeField] int body_part_index;
 
     
     [SerializeField] private GameObject bloodParticlePrefab;
@@ -14,7 +13,7 @@ public class TakeDamage : NetworkBehaviour
         if (IsOwner)
         {
             
-            health.TakeDamageServerRpc(body_part_index);
+            health.TakeDamageServerRpc();
 
             
             PlayParticleSystemServerRpc();
